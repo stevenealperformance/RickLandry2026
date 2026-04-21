@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///Users/steve_neal/Downloads/cp_fatmax_report.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PD · CP · W′ · Fatmax — Jan 2025 → Apr 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./RickCPwprime_files/css2" rel="stylesheet">
+<script src="./RickCPwprime_files/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#121417;
+    --bg-soft:#181b1f;
+    --surface:#1c2026;
+    --surface-hi:#232831;
+    --border:#2b3039;
+    --text:#e7e2d5;
+    --text-dim:#a8a298;
+    --text-muted:#6b6760;
+    --amber:#f4a261;
+    --amber-soft:#f4a26118;
+    --emerald:#52b788;
+    --emerald-soft:#52b78822;
+    --crimson:#e76f51;
+    --steel:#6fb7d4;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:400;
+    font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, #1a1d2210 0%, transparent 55%),
+      radial-gradient(ellipse 700px 400px at 0% 95%, #f4a26108 0%, transparent 60%),
+      var(--bg);
+    min-height:100vh;line-height:1.55
+  }
+  .grain{position:fixed;inset:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='1'/></svg>");z-index:0}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:56px 40px 96px;position:relative;z-index:1}
+  @media (max-width:720px){.wrap{padding:32px 20px 64px}}
+
+  /* --- header --- */
+  .meta{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;
+    padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:40px}
+  .meta .dot{color:var(--amber)}
+
+  h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(40px,6vw,72px);
+    line-height:1.02;letter-spacing:-0.025em;margin:0 0 8px;
+    font-variation-settings:"opsz" 144,"SOFT" 30}
+  h1 em{font-style:italic;font-weight:400;color:var(--amber);
+    font-variation-settings:"opsz" 144,"SOFT" 50}
+  .sub{font-family:'IBM Plex Sans',sans-serif;color:var(--text-dim);font-size:17px;
+    font-weight:300;max-width:640px;margin:14px 0 0}
+  .sub code{font-family:'JetBrains Mono',monospace;font-size:13px;
+    color:var(--amber);background:var(--amber-soft);padding:1px 6px;border-radius:3px}
+
+  /* --- stat row --- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border);border:1px solid var(--border);
+    margin:56px 0 64px;border-radius:2px;overflow:hidden}
+  @media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--surface);padding:24px 22px 22px;position:relative}
+  .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--text-muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+  .stat .val{font-family:'Fraunces',serif;font-weight:400;font-size:44px;
+    line-height:1;letter-spacing:-.02em;
+    font-variation-settings:"opsz" 144}
+  .stat .unit{font-family:'JetBrains Mono',monospace;font-size:13px;
+    color:var(--text-dim);font-weight:400;margin-left:2px}
+  .stat .aux{font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--text-muted);margin-top:8px}
+  .stat.accent .val{color:var(--amber)}
+  .stat.em .val{color:var(--emerald)}
+  .stat.st .val{color:var(--steel)}
+
+  /* --- section --- */
+  section{margin:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:22px}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:28px;
+    letter-spacing:-.015em;margin:0;font-variation-settings:"opsz" 72}
+  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--amber);letter-spacing:.22em;text-transform:uppercase;
+    padding:3px 9px;border:1px solid var(--amber);border-radius:2px}
+  .sec-head .rule{flex:1;height:1px;background:var(--border);transform:translateY(-4px)}
+
+  p{max-width:760px;color:var(--text-dim);font-size:16px;font-weight:300}
+  p strong{color:var(--text);font-weight:500}
+  p code,.mono{font-family:'JetBrains Mono',monospace;font-size:13.5px;
+    color:var(--amber)}
+
+  /* --- chart card --- */
+  .chart-card{background:var(--surface);border:1px solid var(--border);
+    border-radius:4px;padding:20px 22px 12px;margin:18px 0}
+  .chart-card h3{font-family:'IBM Plex Sans',sans-serif;font-weight:500;
+    font-size:14px;margin:0 0 4px;color:var(--text);letter-spacing:.01em}
+  .chart-card .desc{font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--text-muted);margin:0 0 16px}
+  .chart-box{position:relative;height:420px}
+  .chart-box.zoom{height:320px}
+
+  /* --- table --- */
+  table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;
+    font-size:13px;margin:14px 0}
+  thead th{text-align:left;font-weight:500;color:var(--text-muted);
+    padding:10px 14px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    border-bottom:1px solid var(--border);background:transparent}
+  tbody td{padding:11px 14px;border-bottom:1px solid #22262c;color:var(--text)}
+  tbody tr:hover td{background:var(--surface-hi)}
+  td.num{text-align:right;color:var(--text)}
+  td.dim{color:var(--text-dim)}
+  td.hi{color:var(--amber)}
+  .best{box-shadow:inset 3px 0 0 var(--emerald)}
+
+  /* --- callout --- */
+  .callout{background:linear-gradient(180deg,var(--surface) 0%,var(--surface-hi) 100%);
+    border-left:2px solid var(--amber);padding:20px 24px;margin:24px 0;border-radius:0 3px 3px 0}
+  .callout .cl-title{font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+  .callout p{margin:0;color:var(--text);max-width:none;font-size:15px}
+
+  /* --- progression card --- */
+  .prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border);border:1px solid var(--border);border-radius:3px;
+    overflow:hidden;margin:18px 0}
+  @media (max-width:720px){.prog-grid{grid-template-columns:repeat(2,1fr)}}
+  .prog{background:var(--surface);padding:18px 16px}
+  .prog .d{font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .prog .w{font-family:'Fraunces',serif;font-size:28px;font-weight:400;line-height:1;
+    font-variation-settings:"opsz" 72}
+  .prog .w .sm{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);margin-left:3px}
+  .prog .det{font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--text-dim);margin-top:10px;line-height:1.7}
+  .prog.hi{background:linear-gradient(180deg,var(--surface) 0%,#2a231b 100%)}
+  .prog.hi .w{color:var(--amber)}
+
+  /* footer */
+  footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--border);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;letter-spacing:.08em}
+
+  /* scrollbar */
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#2d3139;border-radius:4px}
+  ::-webkit-scrollbar-thumb:hover{background:#3a404a}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
+
+  <div class="meta">
+    <span>Athlete 417577 · <span class="dot">●</span> 78.0 kg</span>
+    <span>Jan 01 2025 — Apr 21 2026 · 269 rides</span>
+  </div>
+
+  <h1>Power–duration, <em>CP</em>, W′ and fatmax</h1>
+  <p class="sub">Analysis window <code>2025-01-01 → 2026-04-21</code>. Maximal mean power extracted across 269 rides, critical power fit via 3-parameter Morton model and cross-checked against intervals.icu's extended-power estimates and the classical 2-parameter hyperbolic.</p>
+
+  <!-- KEY STATS -->
+  <div class="stats">
+    <div class="stat em">
+      <div class="lbl">Critical Power</div>
+      <div class="val">245<span class="unit">W</span></div>
+      <div class="aux">3.14 W/kg · Morton R² = 0.987</div>
+    </div>
+    <div class="stat accent">
+      <div class="lbl">W′ (classical)</div>
+      <div class="val">8.1<span class="unit">kJ</span></div>
+      <div class="aux">intervals.icu eW′ = 20.0 kJ</div>
+    </div>
+    <div class="stat st">
+      <div class="lbl">P<sub>max</sub></div>
+      <div class="val">982<span class="unit">W</span></div>
+      <div class="aux">12.6 W/kg · 1s peak 989 W</div>
+    </div>
+    <div class="stat accent">
+      <div class="lbl">Fatmax target</div>
+      <div class="val">175–190<span class="unit">W</span></div>
+      <div class="aux">~71–78% CP · HR ≈ 120–130</div>
+    </div>
+  </div>
+
+  <!-- PD CURVE -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">01</span>
+      <h2>Power–duration curve</h2>
+      <div class="rule"></div>
+    </div>
+
+    <p>Best all-effort MMP across the window, plotted with the rolling 60-day and the 3-parameter Morton model overlay. Log duration axis. The <span class="mono">CP = 245 W</span> asymptote and the <span style="color:var(--amber)">fatmax band</span> are shaded for reference.</p>
+
+    <div class="chart-card">
+      <h3>PD curve · Jan 2025 → Apr 2026</h3>
+      <p class="desc">hover for per-duration values · log x-axis</p>
+      <div class="chart-box"><canvas id="pdChart" width="2148" height="840" style="display: block; box-sizing: border-box; height: 420px; width: 1074px;"></canvas></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Aerobic zone zoom · 1 min → 3 hr</h3>
+      <p class="desc">fatmax band in amber, CP dashed, April 17 progression marker in crimson</p>
+      <div class="chart-box zoom"><canvas id="aeroChart" width="2148" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 1074px;"></canvas></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%">Duration</th>
+          <th class="num">All-time best</th>
+          <th class="num">Last 60 days</th>
+          <th class="num">2026 YTD</th>
+          <th class="num">June 2025</th>
+        </tr>
+      </thead>
+      <tbody id="mmpTable"><tr>
+    <td>1s</td>
+    <td class="num hi">989 W</td>
+    <td class="num">989 W</td>
+    <td class="num">989 W</td>
+    <td class="num dim">974 W</td></tr><tr>
+    <td>5s</td>
+    <td class="num hi">894 W</td>
+    <td class="num">894 W</td>
+    <td class="num">894 W</td>
+    <td class="num dim">703 W</td></tr><tr>
+    <td>15s</td>
+    <td class="num hi">835 W</td>
+    <td class="num">835 W</td>
+    <td class="num">835 W</td>
+    <td class="num dim">452 W</td></tr><tr>
+    <td>30s</td>
+    <td class="num hi">657 W</td>
+    <td class="num">657 W</td>
+    <td class="num">657 W</td>
+    <td class="num dim">399 W</td></tr><tr>
+    <td>1m</td>
+    <td class="num hi">530 W</td>
+    <td class="num">530 W</td>
+    <td class="num">530 W</td>
+    <td class="num dim">306 W</td></tr><tr>
+    <td>2m</td>
+    <td class="num hi">342 W</td>
+    <td class="num">342 W</td>
+    <td class="num">342 W</td>
+    <td class="num dim">281 W</td></tr><tr>
+    <td>3m</td>
+    <td class="num hi">282 W</td>
+    <td class="num">282 W</td>
+    <td class="num">282 W</td>
+    <td class="num dim">270 W</td></tr><tr>
+    <td>5m</td>
+    <td class="num hi">281 W</td>
+    <td class="num">281 W</td>
+    <td class="num">281 W</td>
+    <td class="num dim">234 W</td></tr><tr>
+    <td>7m</td>
+    <td class="num hi">280 W</td>
+    <td class="num">280 W</td>
+    <td class="num">280 W</td>
+    <td class="num dim">217 W</td></tr><tr>
+    <td>10m</td>
+    <td class="num hi">267 W</td>
+    <td class="num">248 W</td>
+    <td class="num">267 W</td>
+    <td class="num dim">209 W</td></tr><tr>
+    <td>20m</td>
+    <td class="num hi">243 W</td>
+    <td class="num">243 W</td>
+    <td class="num">243 W</td>
+    <td class="num dim">194 W</td></tr><tr>
+    <td>30m</td>
+    <td class="num hi">238 W</td>
+    <td class="num">238 W</td>
+    <td class="num">238 W</td>
+    <td class="num dim">191 W</td></tr><tr>
+    <td>1.0h</td>
+    <td class="num hi">234 W</td>
+    <td class="num">234 W</td>
+    <td class="num">234 W</td>
+    <td class="num dim">189 W</td></tr><tr>
+    <td>2.0h</td>
+    <td class="num hi">216 W</td>
+    <td class="num">204 W</td>
+    <td class="num">216 W</td>
+    <td class="num dim">179 W</td></tr></tbody>
+    </table>
+  </section>
+
+  <!-- CP MODEL COMPARISON -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">02</span>
+      <h2>CP &amp; W′ — model comparison</h2>
+      <div class="rule"></div>
+    </div>
+    <p>Three methods, different assumptions. The 3-parameter Morton fit (best R²) is the reference. Intervals.icu's ExPM distributes short-duration work differently, which is why its eW′ number reads much larger.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Range used</th>
+          <th class="num">CP (W)</th>
+          <th class="num">W′ (kJ)</th>
+          <th class="num">R²</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="best">
+          <td>3-param Morton · P = CP + W′/(t − k)</td>
+          <td class="dim">60 s – 30 min</td>
+          <td class="num hi">245</td>
+          <td class="num hi">8.1</td>
+          <td class="num">0.987</td>
+          <td class="dim">best fit · k = 31.6 s</td>
+        </tr>
+        <tr>
+          <td>2-param hyperbolic (long aerobic)</td>
+          <td class="dim">5 – 20 min</td>
+          <td class="num">239</td>
+          <td class="num">14.5</td>
+          <td class="num">0.835</td>
+          <td class="dim">stable CP, inflated W′</td>
+        </tr>
+        <tr>
+          <td>2-param hyperbolic (standard)</td>
+          <td class="dim">3 – 12 min</td>
+          <td class="num">263</td>
+          <td class="num">4.3</td>
+          <td class="num">0.645</td>
+          <td class="dim">distorted by 3–7 m plateau</td>
+        </tr>
+        <tr>
+          <td>intervals.icu ExPM (eFTP / eW′)</td>
+          <td class="dim">full curve</td>
+          <td class="num">241</td>
+          <td class="num">20.0</td>
+          <td class="num dim">—</td>
+          <td class="dim">different model family</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="cl-title">Interpretation</div>
+      <p>CP agreement is tight — three independent methods land within <strong>239–263 W</strong>, with the high-confidence Morton fit at <strong>245 W (3.14 W/kg)</strong>. W′ is less settled: the classical "energy above CP" figure is <strong>~8–12 kJ</strong>, while intervals.icu's 20 kJ reflects a model that bundles short-duration anaerobic contribution differently. Use 8–12 kJ for classical pacing calculations (W′bal), 20 kJ only inside intervals.icu's ecosystem.</p>
+    </div>
+  </section>
+
+  <!-- FATMAX -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">03</span>
+      <h2>Fatmax — derivation</h2>
+      <div class="rule"></div>
+    </div>
+
+    <p>Without gas-exchange, fatmax is estimated from two converging anchors: a CP-scaled reference band and empirical steady-state data from the four recent SmO2-monitored progression sessions (Mar 25 → Apr 17, 2.5–3 h each, HR capped at 150).</p>
+
+    <h3 style="font-family:&#39;IBM Plex Sans&#39;;font-weight:500;font-size:13px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin:30px 0 12px">CP-scaled reference band</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>% CP</th>
+          <th class="num">Power (W)</th>
+          <th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>60%</td><td class="num">147</td><td class="dim">below LT1 · recovery / very easy endurance</td></tr>
+        <tr><td>65%</td><td class="num">159</td><td class="dim">fatmax floor — classical proxy lower bound</td></tr>
+        <tr class="best"><td>70%</td><td class="num hi">172</td><td>fatmax core — most trained cyclists peak fat ox here</td></tr>
+        <tr class="best"><td>75%</td><td class="num hi">184</td><td>fatmax upper core — ox. extraction ceiling for well-trained</td></tr>
+        <tr><td>78%</td><td class="num">191</td><td class="dim">empirical ceiling (Apr 17 data)</td></tr>
+        <tr><td>85%</td><td class="num">208</td><td class="dim">above LT1 for most — heavy domain</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:&#39;IBM Plex Sans&#39;;font-weight:500;font-size:13px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin:30px 0 12px">Empirical anchor — SmO2 progression rides</h3>
+
+    <div class="prog-grid">
+      <div class="prog">
+        <div class="d">Mar 25 · 152 min</div>
+        <div class="w">174<span class="sm">W avg</span></div>
+        <div class="det">HR 120 · SmO2 33.5<br>baseline</div>
+      </div>
+      <div class="prog">
+        <div class="d">Mar 31 · 170 min</div>
+        <div class="w">179<span class="sm">W avg</span></div>
+        <div class="det">HR 125 · SmO2 29.1<br>slight desat</div>
+      </div>
+      <div class="prog">
+        <div class="d">Apr 07 · 182 min</div>
+        <div class="w">175<span class="sm">W avg</span></div>
+        <div class="det">HR 128 · SmO2 36.5<br>recovering</div>
+      </div>
+      <div class="prog hi">
+        <div class="d">Apr 17 · 180 min</div>
+        <div class="w">192<span class="sm">W avg</span></div>
+        <div class="det">HR 125 · SmO2 45.1<br>fat ox improved ↑</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="cl-title">Working fatmax</div>
+      <p>Converging both anchors: <strong>fatmax range 160–190 W</strong>, with the productive target zone at <strong>175–190 W (~71–78% CP)</strong>. April 17 at 192 W / HR 125 / SmO2 45 is direct evidence of aerobic sustainability at the top of that band. HR anchor roughly <strong>120–130 bpm</strong>; true maxHR likely ≥170 since recent hard intervals top out at ~155 despite effort.</p>
+    </div>
+  </section>
+
+  <!-- CAVEATS -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">04</span>
+      <h2>Caveats</h2>
+      <div class="rule"></div>
+    </div>
+    <p style="max-width:820px">
+      <strong>No recent all-out CP test.</strong> Over the last 30 days, peak Activity eCP reached only 223 W — well below the all-time peak of 287 W from earlier in the window. Current CP is likely a floor; a fresh 3/5/10/20-min test series could raise it 5–10 W.
+      <br><br>
+      <strong>2-min MMP is spiky.</strong> The 342 W 2-min point is ~60 W above the flat 3–7 min plateau (~281 W), which is what distorts the 2-param W′ fit. This is a single recent effort, not a stable indicator.
+      <br><br>
+      <strong>MaxHR probably &gt; 166.</strong> Observed maxHR across 269 rides is 166, but no documented all-out intervals tap it; true max is likely 170–180. HR-anchored fatmax should be revisited once you log a genuine max effort.
+      <br><br>
+      <strong>Fatmax without gas exchange is a proxy.</strong> The %CP band is validated on a population level, not an individual one. The SmO2 cross-check is the strongest empirical signal available here.
+    </p>
+  </section>
+
+  <footer>
+    <span>CLAUDE · generated 2026-04-21</span>
+    <span>chart.js 4.4 · morton 3-param · single-file html</span>
+  </footer>
+
+</div>
+
+<script>
+// --- PD curve data (embedded) ---
+const PD = [{"s": 1, "all": 989, "d60": 989, "j25": 974, "y26": 989}, {"s": 2, "all": 926, "d60": 926, "j25": 853, "y26": 926}, {"s": 3, "all": 913, "d60": 913, "j25": 758, "y26": 913}, {"s": 4, "all": 904, "d60": 904, "j25": 740, "y26": 904}, {"s": 5, "all": 894, "d60": 894, "j25": 703, "y26": 894}, {"s": 6, "all": 889, "d60": 889, "j25": 620, "y26": 889}, {"s": 7, "all": 886, "d60": 886, "j25": 544, "y26": 886}, {"s": 8, "all": 882, "d60": 882, "j25": 531, "y26": 882}, {"s": 9, "all": 874, "d60": 874, "j25": 519, "y26": 874}, {"s": 10, "all": 865, "d60": 865, "j25": 508, "y26": 865}, {"s": 11, "all": 859, "d60": 859, "j25": 496, "y26": 859}, {"s": 12, "all": 850, "d60": 850, "j25": 485, "y26": 850}, {"s": 13, "all": 845, "d60": 845, "j25": 473, "y26": 845}, {"s": 14, "all": 841, "d60": 841, "j25": 461, "y26": 841}, {"s": 15, "all": 835, "d60": 835, "j25": 452, "y26": 835}, {"s": 16, "all": 836, "d60": 836, "j25": 445, "y26": 836}, {"s": 17, "all": 831, "d60": 831, "j25": 441, "y26": 831}, {"s": 18, "all": 825, "d60": 825, "j25": 439, "y26": 825}, {"s": 19, "all": 820, "d60": 820, "j25": 437, "y26": 820}, {"s": 20, "all": 818, "d60": 818, "j25": 433, "y26": 818}, {"s": 21, "all": 814, "d60": 814, "j25": 431, "y26": 814}, {"s": 22, "all": 798, "d60": 798, "j25": 427, "y26": 798}, {"s": 23, "all": 783, "d60": 783, "j25": 422, "y26": 783}, {"s": 24, "all": 765, "d60": 765, "j25": 416, "y26": 765}, {"s": 25, "all": 747, "d60": 747, "j25": 413, "y26": 747}, {"s": 26, "all": 727, "d60": 727, "j25": 412, "y26": 727}, {"s": 27, "all": 708, "d60": 708, "j25": 410, "y26": 708}, {"s": 28, "all": 691, "d60": 691, "j25": 407, "y26": 691}, {"s": 29, "all": 673, "d60": 673, "j25": 405, "y26": 673}, {"s": 30, "all": 657, "d60": 657, "j25": 399, "y26": 657}, {"s": 31, "all": 643, "d60": 643, "j25": 392, "y26": 643}, {"s": 32, "all": 630, "d60": 630, "j25": 387, "y26": 630}, {"s": 33, "all": 616, "d60": 616, "j25": 382, "y26": 616}, {"s": 34, "all": 603, "d60": 603, "j25": 377, "y26": 603}, {"s": 35, "all": 591, "d60": 591, "j25": 373, "y26": 591}, {"s": 36, "all": 580, "d60": 580, "j25": 370, "y26": 580}, {"s": 37, "all": 569, "d60": 569, "j25": 368, "y26": 569}, {"s": 38, "all": 564, "d60": 564, "j25": 363, "y26": 564}, {"s": 39, "all": 562, "d60": 562, "j25": 358, "y26": 562}, {"s": 40, "all": 560, "d60": 560, "j25": 353, "y26": 560}, {"s": 41, "all": 557, "d60": 557, "j25": 348, "y26": 557}, {"s": 42, "all": 556, "d60": 556, "j25": 343, "y26": 556}, {"s": 43, "all": 554, "d60": 554, "j25": 339, "y26": 554}, {"s": 44, "all": 552, "d60": 552, "j25": 337, "y26": 552}, {"s": 45, "all": 550, "d60": 550, "j25": 336, "y26": 550}, {"s": 46, "all": 548, "d60": 548, "j25": 332, "y26": 548}, {"s": 47, "all": 547, "d60": 547, "j25": 328, "y26": 547}, {"s": 48, "all": 546, "d60": 546, "j25": 326, "y26": 546}, {"s": 49, "all": 545, "d60": 545, "j25": 322, "y26": 545}, {"s": 50, "all": 543, "d60": 543, "j25": 318, "y26": 543}, {"s": 51, "all": 541, "d60": 541, "j25": 314, "y26": 541}, {"s": 52, "all": 540, "d60": 540, "j25": 310, "y26": 540}, {"s": 53, "all": 539, "d60": 539, "j25": 308, "y26": 539}, {"s": 54, "all": 537, "d60": 537, "j25": 310, "y26": 537}, {"s": 55, "all": 536, "d60": 536, "j25": 311, "y26": 536}, {"s": 56, "all": 535, "d60": 535, "j25": 309, "y26": 535}, {"s": 57, "all": 534, "d60": 534, "j25": 308, "y26": 534}, {"s": 58, "all": 532, "d60": 532, "j25": 307, "y26": 532}, {"s": 59, "all": 531, "d60": 531, "j25": 306, "y26": 531}, {"s": 60, "all": 530, "d60": 530, "j25": 306, "y26": 530}, {"s": 65, "all": 517, "d60": 517, "j25": 306, "y26": 517}, {"s": 70, "all": 492, "d60": 492, "j25": 300, "y26": 492}, {"s": 75, "all": 469, "d60": 469, "j25": 299, "y26": 469}, {"s": 80, "all": 448, "d60": 448, "j25": 296, "y26": 448}, {"s": 85, "all": 430, "d60": 430, "j25": 292, "y26": 430}, {"s": 90, "all": 413, "d60": 413, "j25": 291, "y26": 413}, {"s": 95, "all": 398, "d60": 398, "j25": 291, "y26": 398}, {"s": 100, "all": 385, "d60": 385, "j25": 290, "y26": 385}, {"s": 105, "all": 373, "d60": 373, "j25": 288, "y26": 373}, {"s": 110, "all": 362, "d60": 362, "j25": 286, "y26": 362}, {"s": 115, "all": 351, "d60": 351, "j25": 283, "y26": 351}, {"s": 120, "all": 342, "d60": 342, "j25": 281, "y26": 342}, {"s": 130, "all": 325, "d60": 325, "j25": 278, "y26": 325}, {"s": 140, "all": 311, "d60": 311, "j25": 274, "y26": 311}, {"s": 150, "all": 300, "d60": 300, "j25": 273, "y26": 300}, {"s": 160, "all": 290, "d60": 290, "j25": 272, "y26": 290}, {"s": 170, "all": 284, "d60": 282, "j25": 271, "y26": 284}, {"s": 180, "all": 282, "d60": 282, "j25": 270, "y26": 282}, {"s": 190, "all": 282, "d60": 282, "j25": 268, "y26": 282}, {"s": 200, "all": 282, "d60": 282, "j25": 267, "y26": 282}, {"s": 210, "all": 282, "d60": 282, "j25": 265, "y26": 282}, {"s": 220, "all": 282, "d60": 282, "j25": 263, "y26": 282}, {"s": 230, "all": 282, "d60": 282, "j25": 261, "y26": 282}, {"s": 240, "all": 282, "d60": 282, "j25": 258, "y26": 282}, {"s": 250, "all": 282, "d60": 282, "j25": 254, "y26": 282}, {"s": 260, "all": 282, "d60": 282, "j25": 252, "y26": 282}, {"s": 270, "all": 281, "d60": 281, "j25": 247, "y26": 281}, {"s": 280, "all": 281, "d60": 281, "j25": 243, "y26": 281}, {"s": 290, "all": 281, "d60": 281, "j25": 238, "y26": 281}, {"s": 300, "all": 281, "d60": 281, "j25": 234, "y26": 281}, {"s": 330, "all": 281, "d60": 281, "j25": 231, "y26": 281}, {"s": 360, "all": 280, "d60": 280, "j25": 223, "y26": 280}, {"s": 390, "all": 280, "d60": 280, "j25": 219, "y26": 280}, {"s": 420, "all": 280, "d60": 280, "j25": 217, "y26": 280}, {"s": 450, "all": 280, "d60": 280, "j25": 214, "y26": 280}, {"s": 480, "all": 280, "d60": 280, "j25": 209, "y26": 280}, {"s": 510, "all": 271, "d60": 271, "j25": 215, "y26": 271}, {"s": 540, "all": 269, "d60": 263, "j25": 214, "y26": 269}, {"s": 570, "all": 268, "d60": 250, "j25": 209, "y26": 268}, {"s": 600, "all": 267, "d60": 248, "j25": 209, "y26": 267}, {"s": 660, "all": 265, "d60": 245, "j25": 204, "y26": 265}, {"s": 720, "all": 263, "d60": 246, "j25": 198, "y26": 263}, {"s": 780, "all": 260, "d60": 247, "j25": 201, "y26": 260}, {"s": 840, "all": 257, "d60": 248, "j25": 200, "y26": 257}, {"s": 900, "all": 255, "d60": 249, "j25": 195, "y26": 255}, {"s": 960, "all": 252, "d60": 250, "j25": 195, "y26": 252}, {"s": 1020, "all": 251, "d60": 251, "j25": 197, "y26": 251}, {"s": 1080, "all": 251, "d60": 251, "j25": 194, "y26": 251}, {"s": 1140, "all": 247, "d60": 247, "j25": 195, "y26": 247}, {"s": 1200, "all": 243, "d60": 243, "j25": 194, "y26": 243}, {"s": 1260, "all": 242, "d60": 242, "j25": 193, "y26": 242}, {"s": 1320, "all": 243, "d60": 243, "j25": 192, "y26": 243}, {"s": 1380, "all": 244, "d60": 244, "j25": 192, "y26": 244}, {"s": 1440, "all": 244, "d60": 244, "j25": 192, "y26": 244}, {"s": 1500, "all": 245, "d60": 245, "j25": 192, "y26": 245}, {"s": 1560, "all": 245, "d60": 245, "j25": 191, "y26": 245}, {"s": 1620, "all": 246, "d60": 246, "j25": 191, "y26": 246}, {"s": 1680, "all": 246, "d60": 246, "j25": 191, "y26": 246}, {"s": 1740, "all": 243, "d60": 243, "j25": 191, "y26": 243}, {"s": 1800, "all": 238, "d60": 238, "j25": 191, "y26": 238}, {"s": 1860, "all": 238, "d60": 238, "j25": 191, "y26": 238}, {"s": 1920, "all": 239, "d60": 239, "j25": 190, "y26": 239}, {"s": 1980, "all": 239, "d60": 239, "j25": 190, "y26": 239}, {"s": 2040, "all": 240, "d60": 240, "j25": 190, "y26": 240}, {"s": 2100, "all": 240, "d60": 240, "j25": 190, "y26": 240}, {"s": 2160, "all": 241, "d60": 241, "j25": 190, "y26": 241}, {"s": 2220, "all": 241, "d60": 241, "j25": 190, "y26": 241}, {"s": 2280, "all": 242, "d60": 242, "j25": 190, "y26": 242}, {"s": 2340, "all": 240, "d60": 240, "j25": 190, "y26": 240}, {"s": 2400, "all": 236, "d60": 236, "j25": 190, "y26": 236}, {"s": 2460, "all": 235, "d60": 235, "j25": 190, "y26": 235}, {"s": 2520, "all": 236, "d60": 236, "j25": 190, "y26": 236}, {"s": 2580, "all": 237, "d60": 237, "j25": 190, "y26": 237}, {"s": 2640, "all": 237, "d60": 237, "j25": 189, "y26": 237}, {"s": 2700, "all": 238, "d60": 238, "j25": 189, "y26": 238}, {"s": 2760, "all": 238, "d60": 238, "j25": 189, "y26": 238}, {"s": 2820, "all": 239, "d60": 239, "j25": 189, "y26": 239}, {"s": 2880, "all": 239, "d60": 239, "j25": 189, "y26": 239}, {"s": 2940, "all": 238, "d60": 238, "j25": 189, "y26": 238}, {"s": 3000, "all": 235, "d60": 235, "j25": 189, "y26": 235}, {"s": 3060, "all": 234, "d60": 234, "j25": 189, "y26": 234}, {"s": 3120, "all": 235, "d60": 235, "j25": 189, "y26": 235}, {"s": 3180, "all": 235, "d60": 235, "j25": 189, "y26": 235}, {"s": 3240, "all": 235, "d60": 235, "j25": 189, "y26": 235}, {"s": 3300, "all": 236, "d60": 236, "j25": 189, "y26": 236}, {"s": 3360, "all": 236, "d60": 236, "j25": 189, "y26": 236}, {"s": 3420, "all": 237, "d60": 237, "j25": 189, "y26": 237}, {"s": 3480, "all": 237, "d60": 237, "j25": 189, "y26": 237}, {"s": 3540, "all": 237, "d60": 237, "j25": 189, "y26": 237}, {"s": 3600, "all": 234, "d60": 234, "j25": 189, "y26": 234}, {"s": 3900, "all": 226, "d60": 226, "j25": 189, "y26": 226}, {"s": 4200, "all": 223, "d60": 223, "j25": 189, "y26": 223}, {"s": 4500, "all": 221, "d60": 221, "j25": 188, "y26": 221}, {"s": 4800, "all": 218, "d60": 218, "j25": 188, "y26": 218}, {"s": 5100, "all": 216, "d60": 214, "j25": 186, "y26": 216}, {"s": 5400, "all": 216, "d60": 211, "j25": 183, "y26": 216}, {"s": 5700, "all": 217, "d60": 209, "j25": 183, "y26": 217}, {"s": 6000, "all": 215, "d60": 207, "j25": 183, "y26": 215}, {"s": 6300, "all": 216, "d60": 205, "j25": 183, "y26": 216}, {"s": 6600, "all": 217, "d60": 202, "j25": 182, "y26": 217}, {"s": 6900, "all": 215, "d60": 204, "j25": 181, "y26": 215}, {"s": 7200, "all": 216, "d60": 204, "j25": 179, "y26": 216}, {"s": 7500, "all": 216, "d60": 204, "j25": 177, "y26": 216}, {"s": 7800, "all": 213, "d60": 205, "j25": 176, "y26": 213}, {"s": 8100, "all": 211, "d60": 203, "j25": 176, "y26": 211}, {"s": 8400, "all": 210, "d60": 202, "j25": 175, "y26": 210}, {"s": 8700, "all": 208, "d60": 202, "j25": 174, "y26": 208}, {"s": 9000, "all": 206, "d60": 201, "j25": 172, "y26": 206}, {"s": 9300, "all": 203, "d60": 200, "j25": 103, "y26": 203}, {"s": 9600, "all": 199, "d60": 198, "j25": null, "y26": 199}, {"s": 9900, "all": 197, "d60": 197, "j25": null, "y26": 197}, {"s": 10200, "all": 196, "d60": 196, "j25": null, "y26": 196}, {"s": 10500, "all": 194, "d60": 194, "j25": null, "y26": 194}, {"s": 10800, "all": 191, "d60": 191, "j25": null, "y26": 191}];
+
+// Build filtered arrays for chart
+function pts(key){
+  return PD.filter(d=>d[key]!=null).map(d=>({x:d.s,y:d[key]}));
+}
+const pAll = pts('all');
+const p60 = pts('d60');
+const p26 = pts('y26');
+
+// Morton model for overlay: P = 245 + 8100 / (t - 31.6)
+const mortonPts = [];
+for(let t=45;t<=3600;t+=(t<120?5:t<600?15:60)){
+  mortonPts.push({x:t,y:245 + 8100/(t-31.6)});
+}
+
+// --- helpers ---
+const secFmt = s => s<60? `${s}s` : s<3600? `${Math.round(s/60)}m` : `${(s/3600).toFixed(1)}h`;
+
+// --- global chart config ---
+Chart.defaults.color = '#a8a298';
+Chart.defaults.borderColor = '#2b3039';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+
+// Fatmax band plugin (draws shaded horizontal band)
+const bandPlugin = {
+  id: 'fatmaxBand',
+  beforeDatasetsDraw(chart, args, opts){
+    const {ctx, chartArea:{left,right}, scales:{y}} = chart;
+    if(!opts.from||!opts.to) return;
+    const yTop = y.getPixelForValue(opts.to);
+    const yBot = y.getPixelForValue(opts.from);
+    ctx.save();
+    ctx.fillStyle = opts.color || 'rgba(244,162,97,.11)';
+    ctx.fillRect(left, yTop, right-left, yBot-yTop);
+    // label
+    if(opts.label){
+      ctx.fillStyle = '#f4a261';
+      ctx.font = "10px 'JetBrains Mono'";
+      ctx.textAlign = 'left';
+      ctx.fillText(opts.label, left + 12, yTop + 14);
+    }
+    ctx.restore();
+  }
+};
+Chart.register(bandPlugin);
+
+// CP line plugin
+const cpLine = {
+  id:'cpLine',
+  afterDatasetsDraw(chart, args, opts){
+    const {ctx, chartArea:{left,right}, scales:{y}} = chart;
+    if(opts.value==null) return;
+    const yp = y.getPixelForValue(opts.value);
+    ctx.save();
+    ctx.strokeStyle = opts.color || '#52b788';
+    ctx.setLineDash(opts.dash || [4,4]);
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(left, yp);
+    ctx.lineTo(right, yp);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    if(opts.label){
+      ctx.fillStyle = opts.color || '#52b788';
+      ctx.font = "10px 'JetBrains Mono'";
+      ctx.textAlign = 'right';
+      ctx.fillText(opts.label, right - 8, yp - 6);
+    }
+    ctx.restore();
+  }
+};
+Chart.register(cpLine);
+
+// --- Chart 1: full PD curve ---
+new Chart(document.getElementById('pdChart'), {
+  type:'line',
+  data:{
+    datasets:[
+      {label:'Best MMP (all-time)', data:pAll, borderColor:'#f4a261', backgroundColor:'#f4a26133',
+       borderWidth:2, pointRadius:0, pointHoverRadius:4, tension:0.1, fill:false, order:2},
+      {label:'Last 60 days', data:p60, borderColor:'#6fb7d4', backgroundColor:'transparent',
+       borderWidth:1.2, borderDash:[3,3], pointRadius:0, pointHoverRadius:3, tension:0.1, fill:false, order:3},
+      {label:'Morton fit (CP=245, W′=8.1kJ)', data:mortonPts, borderColor:'#52b788', backgroundColor:'transparent',
+       borderWidth:1.4, pointRadius:0, tension:0.05, fill:false, order:1}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'nearest',axis:'x',intersect:false},
+    plugins:{
+      legend:{labels:{usePointStyle:true,pointStyle:'line',boxWidth:24,padding:16,font:{size:11}},align:'end'},
+      tooltip:{
+        backgroundColor:'#1c2026', borderColor:'#2b3039', borderWidth:1,
+        titleFont:{family:"'JetBrains Mono'",size:11}, bodyFont:{family:"'JetBrains Mono'",size:11},
+        callbacks:{
+          title:c=>secFmt(c[0].parsed.x),
+          label:c=>`${c.dataset.label}: ${Math.round(c.parsed.y)} W`
+        }
+      },
+      fatmaxBand:{from:159, to:191, color:'rgba(244,162,97,.08)', label:'FATMAX 159–191 W'},
+      cpLine:{value:245, color:'#52b788', label:'CP 245 W', dash:[4,4]}
+    },
+    scales:{
+      x:{type:'logarithmic', min:1, max:3800,
+        title:{display:true,text:'Duration',color:'#6b6760',font:{size:10,family:"'JetBrains Mono'"}},
+        grid:{color:'#22262c'}, border:{color:'#2b3039'},
+        ticks:{
+          callback:v=>{const s=[1,5,10,30,60,120,300,600,1200,1800,3600];
+            return s.includes(v)?secFmt(v):''},
+          font:{size:10}, maxRotation:0
+        }
+      },
+      y:{min:150, max:1050,
+        title:{display:true,text:'Power (W)',color:'#6b6760',font:{size:10,family:"'JetBrains Mono'"}},
+        grid:{color:'#22262c'}, border:{color:'#2b3039'},
+        ticks:{stepSize:100,font:{size:10}}
+      }
+    }
+  }
+});
+
+// --- Chart 2: aerobic zoom ---
+new Chart(document.getElementById('aeroChart'), {
+  type:'line',
+  data:{
+    datasets:[
+      {label:'Best MMP', data:pAll, borderColor:'#f4a261', backgroundColor:'transparent',
+       borderWidth:2, pointRadius:2, pointHoverRadius:5, tension:0.15, fill:false},
+      {label:'Apr 17 · 3h @ 192W', data:[{x:10800,y:192}],
+       borderColor:'#e76f51', backgroundColor:'#e76f51',
+       pointRadius:7, pointStyle:'rectRot', showLine:false},
+      {label:'Apr 07', data:[{x:10929,y:175}],
+       borderColor:'#e76f51', backgroundColor:'transparent',
+       pointRadius:5, pointStyle:'rectRot', showLine:false},
+      {label:'Mar 31', data:[{x:10199,y:179}],
+       borderColor:'#e76f51', backgroundColor:'transparent',
+       pointRadius:5, pointStyle:'rectRot', showLine:false},
+      {label:'Mar 25', data:[{x:9140,y:174}],
+       borderColor:'#e76f51', backgroundColor:'transparent',
+       pointRadius:5, pointStyle:'rectRot', showLine:false}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'nearest',axis:'x',intersect:false},
+    plugins:{
+      legend:{labels:{usePointStyle:true,boxWidth:10,padding:10,font:{size:10}},align:'end'},
+      tooltip:{
+        backgroundColor:'#1c2026', borderColor:'#2b3039', borderWidth:1,
+        titleFont:{family:"'JetBrains Mono'",size:11}, bodyFont:{family:"'JetBrains Mono'",size:11},
+        callbacks:{
+          title:c=>secFmt(c[0].parsed.x),
+          label:c=>`${c.dataset.label}: ${Math.round(c.parsed.y)} W`
+        }
+      },
+      fatmaxBand:{from:159, to:191, color:'rgba(244,162,97,.13)', label:'FATMAX 159–191 W'},
+      cpLine:{value:245, color:'#52b788', label:'CP 245 W', dash:[4,4]}
+    },
+    scales:{
+      x:{type:'logarithmic', min:60, max:13000,
+        title:{display:true,text:'Duration',color:'#6b6760',font:{size:10,family:"'JetBrains Mono'"}},
+        grid:{color:'#22262c'}, border:{color:'#2b3039'},
+        ticks:{
+          callback:v=>{const s=[60,120,300,600,1200,1800,3600,7200,10800];
+            return s.includes(v)?secFmt(v):''},
+          font:{size:10}, maxRotation:0
+        }
+      },
+      y:{min:150, max:360,
+        title:{display:true,text:'Power (W)',color:'#6b6760',font:{size:10,family:"'JetBrains Mono'"}},
+        grid:{color:'#22262c'}, border:{color:'#2b3039'},
+        ticks:{stepSize:25,font:{size:10}}
+      }
+    }
+  }
+});
+
+// --- MMP table ---
+const keyDurs = [1,5,15,30,60,120,180,300,420,600,1200,1800,3600,7200];
+const tbody = document.getElementById('mmpTable');
+keyDurs.forEach(s=>{
+  const r = PD.find(d=>d.s===s);
+  if(!r) return;
+  const row = document.createElement('tr');
+  const f = v => v==null?'<span style="color:#6b6760">—</span>':`${v} W`;
+  row.innerHTML = `
+    <td>${secFmt(s)}</td>
+    <td class="num hi">${f(r.all)}</td>
+    <td class="num">${f(r.d60)}</td>
+    <td class="num">${f(r.y26)}</td>
+    <td class="num dim">${f(r.j25)}</td>`;
+  tbody.appendChild(row);
+});
+</script>
+
+
+</body></html>
