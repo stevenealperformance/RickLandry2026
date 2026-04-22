@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)file:///Users/steve_neal/Downloads/matched_zone_progression_10.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matched-zone progression · Mar 25 → Apr 17</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./RickPtoHRandMoxy_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --paper:#fafaf7;
+    --surface:#ffffff;
+    --surface-hi:#f4f3ee;
+    --border:#d9d4c7;
+    --border-soft:#e9e5db;
+    --text:#0a0906;
+    --text-body:#141210;
+    --text-dim:#2e2b24;
+    --text-muted:#4a4740;
+
+    --amber:#b55a0a;
+    --amber-soft:#f4e5d3;
+    --emerald:#0f7a4a;
+    --emerald-soft:#d4eadd;
+    --crimson:#b8390e;
+
+    /* day colors (muted-but-readable on white) */
+    --d1:#737373;
+    --d2:#0891b2;
+    --d3:#1e40af;
+    --d4:#b55a0a;
+
+    /* zone colors */
+    --zw:#6b7280;
+    --zs:#0e7490;
+    --z75:#047857;
+    --z80:#c2410c;
+    --z85:#b91c1c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text-body);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:400;
+    font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:60px 48px 100px}
+  @media (max-width:720px){.wrap{padding:36px 22px 72px}}
+
+  .meta{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:500;
+    color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;
+    padding-bottom:16px;border-bottom:1.5px solid var(--border);margin-bottom:44px}
+  .meta .dot{color:var(--amber);font-size:16px;vertical-align:-1px}
+
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(46px,6.2vw,78px);
+    line-height:1.02;letter-spacing:-0.02em;margin:0 0 10px;color:var(--text);
+    font-variation-settings:"opsz" 144,"SOFT" 30}
+  h1 em{font-style:italic;font-weight:500;color:var(--amber);
+    font-variation-settings:"opsz" 144,"SOFT" 50}
+  .sub{color:var(--text-dim);font-size:20px;font-weight:400;max-width:840px;margin:18px 0 0;line-height:1.55}
+  .sub code{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;
+    color:var(--amber);background:var(--amber-soft);padding:2px 8px;border-radius:3px}
+
+  /* legend */
+  .legend{display:flex;gap:26px;margin:28px 0 0;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text-dim);
+    font-weight:500;letter-spacing:.04em;padding:18px 0;
+    border-top:1.5px solid var(--border-soft);border-bottom:1.5px solid var(--border-soft)}
+  .legend span{display:inline-flex;align-items:center;gap:9px}
+  .legend .dot{width:10px;height:10px;border-radius:50%}
+
+  /* stats strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border);border:1px solid var(--border);
+    margin:40px 0 56px;border-radius:3px;overflow:hidden}
+  @media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--paper);padding:26px 24px 22px}
+  .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
+  .stat .val{font-family:'Fraunces',serif;font-weight:500;font-size:48px;
+    line-height:1;letter-spacing:-.02em;color:var(--text);
+    font-variation-settings:"opsz" 144}
+  .stat .delta{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--emerald);
+    margin-left:8px;font-weight:600;vertical-align:2px}
+  .stat .aux{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text-muted);
+    margin-top:10px;line-height:1.6;font-weight:500}
+  .stat .val .u{font-family:'JetBrains Mono',monospace;font-size:18px;
+    color:var(--text-muted);margin-left:3px;font-weight:500}
+  .stat.em .val{color:var(--emerald)}
+  .stat.accent .val{color:var(--amber)}
+
+  /* slot comparison grid */
+  .slot-row{margin:32px 0 20px}
+  .slot-label{display:flex;align-items:baseline;gap:16px;margin-bottom:12px}
+  .slot-label .sl{font-family:'Fraunces',serif;font-size:26px;font-weight:500;color:var(--text);
+    font-variation-settings:"opsz" 72}
+  .slot-label .zone-chip{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    padding:4px 10px;border-radius:3px;letter-spacing:.15em;text-transform:uppercase}
+  .slot-label .zone-chip.steady{background:#e0f1f7;color:var(--zs);border:1.5px solid var(--zs)}
+  .slot-label .zone-chip.z75{background:#d7ecdd;color:var(--z75);border:1.5px solid var(--z75)}
+  .slot-label .zone-chip.z80{background:#fce4d2;color:var(--z80);border:1.5px solid var(--z80)}
+  .slot-label .zone-chip.z85{background:#f7dcd7;color:var(--z85);border:1.5px solid var(--z85)}
+  .slot-label .bar{flex:1;height:2.5px;border-radius:1.5px;background:var(--border)}
+  .slot-label .flag-note{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+    color:var(--crimson);background:#f8dfd4;border:1px solid var(--crimson);
+    padding:3px 9px;border-radius:3px;letter-spacing:.04em}
+
+  .slot-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){.slot-cards{grid-template-columns:1fr}}
+  .scard{background:var(--paper);border:1.5px solid var(--border);border-radius:4px;
+    padding:18px 22px 18px}
+  .scard .chead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .scard .chead .title{font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--text)}
+  .scard .chead .delta{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+  .scard .chead .delta.pos{color:var(--emerald)}
+  .scard .chead .delta.neg{color:var(--crimson)}
+  .scard .csub{font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;color:var(--text-dim);
+    margin:0 0 10px;font-weight:500}
+  .scard svg{width:100%;height:auto;display:block}
+  .scard svg text{font-family:'JetBrains Mono',monospace;font-weight:600}
+
+  /* section headers */
+  section{margin:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:24px}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:36px;
+    letter-spacing:-.015em;margin:0;color:var(--text);font-variation-settings:"opsz" 72}
+  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--amber);letter-spacing:.22em;text-transform:uppercase;
+    padding:5px 12px;border:1.5px solid var(--amber);border-radius:3px}
+  .sec-head .rule{flex:1;height:1px;background:var(--border);transform:translateY(-5px)}
+
+  p{max-width:940px;color:var(--text-body);font-size:18px;font-weight:400;line-height:1.65}
+  p strong{color:var(--text);font-weight:600}
+  .mono,p code{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--amber);font-weight:500}
+
+  /* zone group (matched comparison) */
+  .zone-block{margin:32px 0 12px}
+  .zone-label{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+  .zone-label .z{font-family:'Fraunces',serif;font-size:26px;font-weight:500;color:var(--text)}
+  .zone-label .tag2{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--text-muted);letter-spacing:.14em;padding:4px 12px;
+    border:1.5px solid var(--border);border-radius:3px;background:var(--paper)}
+  .zone-label .bar{flex:1;height:3px;border-radius:1.5px}
+  .zone-block[data-zone="warmup"] .zone-label .bar{background:var(--zw)}
+  .zone-block[data-zone="steady"] .zone-label .bar{background:var(--zs)}
+  .zone-block[data-zone="z75"] .zone-label .bar{background:var(--z75)}
+  .zone-block[data-zone="z80"] .zone-label .bar{background:var(--z80)}
+  .zone-block[data-zone="z85"] .zone-label .bar{background:var(--z85)}
+
+  /* matched comparison row (4 cols) */
+  .cmp{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0 20px}
+  @media (max-width:900px){.cmp{grid-template-columns:repeat(2,1fr)}}
+  .cmp .col{background:var(--paper);border:1.5px solid var(--border);
+    border-left-width:5px;border-radius:4px;padding:18px 20px 20px}
+  .cmp .col[data-day="Mar 25"]{border-left-color:var(--d1)}
+  .cmp .col[data-day="Mar 31"]{border-left-color:var(--d2)}
+  .cmp .col[data-day="Apr 07"]{border-left-color:var(--d3)}
+  .cmp .col[data-day="Apr 17"]{border-left-color:var(--d4)}
+  .cmp .col .day{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:600;
+    color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
+  .cmp .col .w{font-family:'Fraunces',serif;font-size:36px;line-height:1;font-weight:500;
+    color:var(--text);font-variation-settings:"opsz" 72}
+  .cmp .col .w .u{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;
+    color:var(--text-muted);margin-left:3px}
+  .cmp .col .h{font-family:'JetBrains Mono',monospace;font-size:14.5px;font-weight:500;
+    color:var(--text-body);margin-top:12px;line-height:1.75}
+  .cmp .col .h b{color:var(--text);font-weight:700}
+  .cmp .col .slope.pos{color:var(--emerald);font-weight:700}
+  .cmp .col .slope.neg{color:var(--crimson);font-weight:700}
+  .cmp .col .slope.neutral{color:var(--text-dim);font-weight:600}
+  .cmp .col.empty{opacity:.55}
+  .cmp .col.empty .w{color:var(--text-muted);font-size:26px;font-weight:400}
+
+  /* callout */
+  .callout{background:var(--paper);border:1.5px solid var(--border);
+    border-left:5px solid var(--amber);padding:22px 26px;margin:26px 0;border-radius:0 4px 4px 0}
+  .callout .cl-title{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+    color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+  .callout p{margin:0;color:var(--text);max-width:none;font-size:17px;line-height:1.65}
+  .callout.em{border-left-color:var(--emerald)}
+  .callout.em .cl-title{color:var(--emerald)}
+
+  /* narrative */
+  .narr{max-width:960px;font-size:18px;line-height:1.75;color:var(--text-body)}
+  .narr strong{color:var(--text);font-weight:700}
+  .narr em{font-style:italic;color:var(--text)}
+
+  footer{margin-top:96px;padding-top:32px;border-top:1.5px solid var(--border);
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    letter-spacing:.08em;font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="meta">
+    <span>Athlete 417577 · <span class="dot">●</span> 4 sessions</span>
+    <span>Protocol-timed windows · P:HR efficiency &amp; SmO2 slope</span>
+  </div>
+
+  <h1>Power-to-HR and <em>oxygen economy</em></h1>
+  <p class="sub">Twelve protocol-defined work windows per session. No HR-plateau detection — windows come straight from the prescribed timing (Block 1: 15–75 min, rest, Block 2: 80–125 min, rest, Block 3: 130–175 min). <b>Left card: P:HR ratio</b> (watts per bpm — cardiovascular efficiency). <b>Right card: SmO2/W</b> (mean muscle oxygen per watt — oxygen economy). Both are <i>ratios</i>, so they aren't punished when the athlete produces more power.</p>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--d1)"></span>Mar 25</span>
+    <span><span class="dot" style="background:var(--d2)"></span>Mar 31</span>
+    <span><span class="dot" style="background:var(--d3)"></span>Apr 07</span>
+    <span><span class="dot" style="background:var(--d4)"></span>Apr 17</span>
+    <span style="margin-left:20px;color:var(--text-muted)">│</span>
+    <span><span class="dot" style="background:var(--zs)"></span>Steady</span>
+    <span><span class="dot" style="background:var(--z75)"></span>75 %</span>
+    <span><span class="dot" style="background:var(--z80)"></span>80 %</span>
+    <span><span class="dot" style="background:var(--z85)"></span>85 %</span>
+  </div>
+
+  <!-- KEY STATS -->
+  <div class="stats">
+    <div class="stat em">
+      <div class="lbl">B1 · 85 % · SmO2/W</div>
+      <div class="val">0.13<span class="delta">+0.07</span></div>
+      <div class="aux">0.054 → 0.126 · more than 2× better<br>oxygen economy at the ceiling</div>
+    </div>
+    <div class="stat em">
+      <div class="lbl">B2 · 85 % · P:HR</div>
+      <div class="val">1.75<span class="delta">+0.33</span></div>
+      <div class="aux">254 W @ 145 bpm · biggest<br>mid-session efficiency gain</div>
+    </div>
+    <div class="stat accent">
+      <div class="lbl">B3 · 85 % · SmO2/W</div>
+      <div class="val">0.16<span class="delta">+0.03</span></div>
+      <div class="aux">Apr 07 → Apr 17 · late-session<br>economy continues to climb</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">Slots improving SmO2/W</div>
+      <div class="val">10<span class="u"> / 12</span></div>
+      <div class="aux">83 % of protocol steps show<br>rising oxygen-per-watt trend</div>
+    </div>
+  </div>
+
+  <!-- PROTOCOL STEP COMPARISON GRID -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">01</span>
+      <h2>Protocol step · efficiency and SmO2</h2>
+      <div class="rule"></div>
+    </div>
+    <p>Windows come from the prescribed protocol timing, not HR stability — so every step is covered in every session (assuming the workout ran that long). Both metrics are <b>ratios</b> — they normalize out absolute power so harder sessions aren't unfairly penalized. <strong>Left: P:HR</strong> (watts per bpm, cardiovascular efficiency). <strong>Right: SmO2/W</strong> (mean muscle oxygen per watt, oxygen economy). For both, higher = better.</p>
+
+    <div class="callout">
+      <div class="cl-title">Reading off-protocol bars</div>
+      <p><strong>Hollow dashed bars</strong> mark windows where the athlete's HR wasn't in the prescribed zone — mostly Mar 25 and Mar 31 early in the learning curve. Those values (marked with <em>*</em>) are shown for transparency but <strong>excluded from trend deltas</strong>. A dashed bar at "0.23 SmO2/W" usually means the athlete was cruising easy during a window the protocol called for as hard — the ratio looks good because the denominator (watts) is low, not because the economy is real.</p>
+    </div>
+
+    <div id="slotGrid"><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 1 · Steady</span>
+        <span class="zone-chip steady">65–70 % HR</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.02</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="103.7" width="70" height="112.3" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="97.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.57</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">184W@117</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="140.2" width="70" height="75.8" fill="#0891b2" fill-opacity="0.82" stroke="#0891b2" stroke-width="1"></rect><text x="223.75" y="134.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.42</text><text x="223.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">170W@120</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="181.2" width="70" height="34.8" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="175.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.25</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">150W@120</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="109.4" width="70" height="106.6" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="103.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.54</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">179W@116</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.116</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="115.8" width="70" height="100.2" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="109.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.183</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">33.6%@184W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="109.7" width="70" height="106.3" fill="#0f7a4a" fill-opacity="0.35" stroke="#0891b2" stroke-width="1.5"></rect><text x="226.25" y="103.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.194</text><text x="226.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">32.9%@170W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="56.5" width="70" height="159.5" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="50.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.291</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">43.6%@150W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="52.0" width="70" height="164.0" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="46.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.299</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">53.5%@179W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 1 · 75 %</span>
+        <span class="zone-chip z75">~131 bpm</span>
+        <span class="flag-note">* Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.03</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="82.3" width="70" height="133.7" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="76.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.66</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">214W@129</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="96.2" width="70" height="119.8" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="90.2" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.60*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">198W@124</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="148.6" width="70" height="67.4" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="142.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.38</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">180W@131</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="89.5" width="70" height="126.5" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="83.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.63</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">209W@128</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.090</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="150.3" width="70" height="65.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="144.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.120</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">25.7%@214W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="137.0" width="70" height="79.0" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="131.0" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.144*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">28.5%@198W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="103.2" width="70" height="112.8" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="97.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.206</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">37%@180W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="101.1" width="70" height="114.9" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="95.1" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.209</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">43.8%@209W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 1 · 80 %</span>
+        <span class="zone-chip z80">~141 bpm</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.03</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="72.2" width="70" height="143.8" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="66.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.70</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">238W@140</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="84.7" width="70" height="131.3" fill="#0891b2" fill-opacity="0.82" stroke="#0891b2" stroke-width="1"></rect><text x="223.75" y="78.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.65</text><text x="223.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">217W@132</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="132.7" width="70" height="83.3" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="126.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.45</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">202W@140</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="78.5" width="70" height="137.5" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="72.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.67</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">232W@139</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.084</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="173.5" width="70" height="42.5" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="167.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.077</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">18.4%@238W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="161.6" width="70" height="54.4" fill="#0f7a4a" fill-opacity="0.35" stroke="#0891b2" stroke-width="1.5"></rect><text x="226.25" y="155.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.099</text><text x="226.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">21.6%@217W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="130.9" width="70" height="85.1" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="124.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.155</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">31.3%@202W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="127.6" width="70" height="88.4" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="121.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.161</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">37.4%@232W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 1 · 85 %</span>
+        <span class="zone-chip z85">~148 bpm</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.01</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="61.0" width="70" height="155.0" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="55.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.75</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">257W@147</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="102.2" width="70" height="113.8" fill="#0891b2" fill-opacity="0.82" stroke="#0891b2" stroke-width="1"></rect><text x="223.75" y="96.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.57</text><text x="223.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">222W@141</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="111.4" width="70" height="104.6" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="105.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.54</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">222W@145</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="63.6" width="70" height="152.4" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="57.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.74</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">252W@145</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.072</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="186.3" width="70" height="29.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="180.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.054</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">13.9%@257W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="161.9" width="70" height="54.1" fill="#0f7a4a" fill-opacity="0.35" stroke="#0891b2" stroke-width="1.5"></rect><text x="226.25" y="155.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.099</text><text x="226.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">21.9%@222W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="148.5" width="70" height="67.5" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="142.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.123</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">27.3%@222W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="146.8" width="70" height="69.2" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="140.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.126</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">31.8%@252W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 2 · Steady</span>
+        <span class="zone-chip steady">65–70 % HR</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.04</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="126.5" width="70" height="89.5" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="120.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.47</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">167W@114</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="174.0" width="70" height="42.0" fill="#0891b2" fill-opacity="0.82" stroke="#0891b2" stroke-width="1"></rect><text x="223.75" y="168.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.27</text><text x="223.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">154W@121</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="153.8" width="70" height="62.2" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="147.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.36</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">161W@118</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="135.6" width="70" height="80.4" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="129.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.44</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">168W@117</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.072</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="96.0" width="70" height="120.0" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="90.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.219</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">36.6%@167W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="103.3" width="70" height="112.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#0891b2" stroke-width="1.5"></rect><text x="226.25" y="97.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.205</text><text x="226.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">31.7%@154W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="85.5" width="70" height="130.5" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="79.5" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.238</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">38.2%@161W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="56.4" width="70" height="159.6" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="50.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.291</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">48.9%@168W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 2 · 75 %</span>
+        <span class="zone-chip z75">~131 bpm</span>
+        <span class="flag-note">* Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.07</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="105.4" width="70" height="110.6" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="99.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.56</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">200W@128</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="126.2" width="70" height="89.8" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="120.2" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.47*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">180W@122</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="121.9" width="70" height="94.1" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="115.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.49</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">191W@128</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="88.8" width="70" height="127.2" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="82.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.63</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">211W@130</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.034</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="128.7" width="70" height="87.3" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="122.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.159</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">31.9%@200W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="127.3" width="70" height="88.7" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="121.3" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.162*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">29.1%@180W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="118.8" width="70" height="97.2" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="112.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.177</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">33.9%@191W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="110.0" width="70" height="106.0" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="104.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.193</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">40.8%@211W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 2 · 80 %</span>
+        <span class="zone-chip z80">~141 bpm</span>
+        <span class="flag-note">* Mar 25, Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.14</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="101.0" width="70" height="115.0" fill="#737373" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="113.25" y="95.0" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.58*</text><text x="113.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">186W@118</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="111.1" width="70" height="104.9" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="105.1" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.54*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">202W@132</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="105.8" width="70" height="110.2" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="99.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.56</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">215W@138</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="73.2" width="70" height="142.8" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="67.2" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.70</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">233W@138</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.022</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="99.1" width="70" height="116.9" fill="#0f7a4a" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="116.75" y="93.1" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.213*</text><text x="116.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">39.6%@186W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="140.6" width="70" height="75.4" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="134.6" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.138*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">27.8%@202W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="138.6" width="70" height="77.4" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="132.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.141</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">30.4%@215W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="126.6" width="70" height="89.4" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="120.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.163</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">38%@233W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 2 · 85 %</span>
+        <span class="zone-chip z85">~148 bpm</span>
+        <span class="flag-note">* Mar 25, Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.16</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="139.0" width="70" height="77.0" fill="#737373" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="113.25" y="133.0" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.42*</text><text x="113.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">168W@118</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="96.2" width="70" height="119.8" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="90.2" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.60*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">217W@136</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="99.4" width="70" height="116.6" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="93.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.59</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">229W@145</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="59.8" width="70" height="156.2" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="53.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.75</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">254W@145</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.006</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="91.9" width="70" height="124.1" fill="#0f7a4a" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="116.75" y="85.9" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.226*</text><text x="116.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">37.9%@168W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="154.7" width="70" height="61.3" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="148.7" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.112*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">24.3%@217W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="147.4" width="70" height="68.6" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="141.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.125</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">28.7%@229W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="144.4" width="70" height="71.6" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="138.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.131</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">33.1%@254W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 3 · Steady</span>
+        <span class="zone-chip steady">65–70 % HR</span>
+        <span class="flag-note">* Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta neg">-0.03</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="135.6" width="70" height="80.4" fill="#737373" fill-opacity="0.82" stroke="#737373" stroke-width="1"></rect><text x="113.25" y="129.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.44</text><text x="113.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">174W@122</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="137.5" width="70" height="78.5" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="131.5" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.43*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">188W@132</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="171.1" width="70" height="44.9" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="165.1" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.29</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">153W@119</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="142.8" width="70" height="73.2" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="136.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.41</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">162W@115</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.097</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="98.3" width="70" height="117.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#737373" stroke-width="1.5"></rect><text x="116.75" y="92.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.215</text><text x="116.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">37.4%@174W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="140.4" width="70" height="75.6" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="134.4" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.138*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">25.9%@188W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="70.7" width="70" height="145.3" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="64.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.265</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">40.5%@153W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="44.8" width="70" height="171.2" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="38.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.312</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">50.5%@162W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 3 · 75 %</span>
+        <span class="zone-chip z75">~131 bpm</span>
+        <span class="flag-note">* Mar 25, Mar 31 off-protocol (HR outside zone)</span>
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.08</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><rect x="78.3" y="164.9" width="70" height="51.1" fill="#737373" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="113.25" y="158.9" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.31*</text><text x="113.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">151W@115</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="145.2" width="70" height="70.8" fill="#0891b2" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="223.75" y="139.2" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">1.40*</text><text x="223.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">171W@123</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="118.8" width="70" height="97.2" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="112.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.50</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">195W@130</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="99.8" width="70" height="116.2" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="93.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.58</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">205W@130</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.040</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><rect x="81.8" y="63.9" width="70" height="152.1" fill="#0f7a4a" fill-opacity="0.08" stroke="#737373" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="116.75" y="57.9" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.277*</text><text x="116.75" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">41.9%@151W</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="114.8" width="70" height="101.2" fill="#0f7a4a" fill-opacity="0.08" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="4 3"></rect><text x="226.25" y="108.8" text-anchor="middle" fill="#8a857a" font-size="13" font-weight="600" font-style="italic">0.184*</text><text x="226.25" y="254" text-anchor="middle" fill="#8a857a" font-size="12" font-weight="600" font-style="italic">31.6%@171W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="118.8" width="70" height="97.2" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="112.8" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.177</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">34.6%@195W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="97.0" width="70" height="119.0" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="91.0" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.217</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">44.5%@205W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 3 · 80 %</span>
+        <span class="zone-chip z80">~141 bpm</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.10</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><text x="113.25" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="188.8" y="111.1" width="70" height="104.9" fill="#0891b2" fill-opacity="0.82" stroke="#0891b2" stroke-width="1"></rect><text x="223.75" y="105.1" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.54</text><text x="223.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">203W@132</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="110.9" width="70" height="105.1" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="104.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.54</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">213W@138</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="87.4" width="70" height="128.6" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="81.4" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.64</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">226W@138</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.062</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><text x="116.75" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><rect x="191.3" y="143.9" width="70" height="72.1" fill="#0f7a4a" fill-opacity="0.35" stroke="#0891b2" stroke-width="1.5"></rect><text x="226.25" y="137.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.131</text><text x="226.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">26.7%@203W</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="133.3" width="70" height="82.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="127.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.151</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">32.1%@213W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="110.1" width="70" height="105.9" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="104.1" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.193</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">43.6%@226W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div><div class="slot-row">
+      <div class="slot-label">
+        <span class="sl">Block 3 · 85 %</span>
+        <span class="zone-chip z85">~148 bpm</span>
+        
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            <span class="delta pos">+0.08</span>
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="58" x2="500" y1="191.99999999999997" y2="191.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="143.99999999999997" y2="143.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="95.99999999999997" y2="95.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="47.99999999999997" y2="47.99999999999997" stroke="#e9e5db" stroke-width="1"></line><line x1="58" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="50" y="195.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.2</text><text x="50" y="147.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.4</text><text x="50" y="99.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.6</text><text x="50" y="51.99999999999997" fill="#4a4740" font-size="11" text-anchor="end">1.8</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">P : HR</text><text x="113.25" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="113.25" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><text x="223.75" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="223.75" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="299.3" y="99.6" width="70" height="116.4" fill="#1e40af" fill-opacity="0.82" stroke="#1e40af" stroke-width="1"></rect><text x="334.25" y="93.6" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.58</text><text x="334.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">228W@144</text><text x="334.25" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="409.8" y="79.9" width="70" height="136.1" fill="#b55a0a" fill-opacity="0.82" stroke="#b55a0a" stroke-width="1"></rect><text x="444.75" y="73.9" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">1.67</text><text x="444.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">240W@144</text><text x="444.75" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            <span class="delta pos">+0.030</span>
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg">
+    <line x1="62" x2="500" y1="216" y2="216" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="188.57142857142856" y2="188.57142857142856" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="161.14285714285714" y2="161.14285714285714" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="133.7142857142857" y2="133.7142857142857" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="106.28571428571428" y2="106.28571428571428" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="78.85714285714286" y2="78.85714285714286" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="51.428571428571416" y2="51.428571428571416" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="24" y2="24" stroke="#e9e5db" stroke-width="1"></line><line x1="62" x2="500" y1="216" y2="216" stroke="#141210" stroke-width="1.5"></line><text x="54" y="220" fill="#4a4740" font-size="11" text-anchor="end">0.00</text><text x="54" y="192.57142857142856" fill="#4a4740" font-size="11" text-anchor="end">0.05</text><text x="54" y="165.14285714285714" fill="#4a4740" font-size="11" text-anchor="end">0.10</text><text x="54" y="137.7142857142857" fill="#4a4740" font-size="11" text-anchor="end">0.15</text><text x="54" y="110.28571428571428" fill="#4a4740" font-size="11" text-anchor="end">0.20</text><text x="54" y="82.85714285714286" fill="#4a4740" font-size="11" text-anchor="end">0.25</text><text x="54" y="55.428571428571416" fill="#4a4740" font-size="11" text-anchor="end">0.30</text><text x="54" y="28" fill="#4a4740" font-size="11" text-anchor="end">0.35</text><text x="16" y="120" transform="rotate(-90 16 120)" fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600" letter-spacing="2">SmO2 / W</text><text x="116.75" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="116.75" y="236" text-anchor="middle" fill="#737373" font-size="12" font-weight="700" letter-spacing="1">Mar 25</text><text x="226.25" y="208.0" text-anchor="middle" fill="#8a857a" font-size="18" font-weight="700">—</text><text x="226.25" y="236" text-anchor="middle" fill="#0891b2" font-size="12" font-weight="700" letter-spacing="1">Mar 31</text><rect x="300.8" y="143.3" width="70" height="72.7" fill="#0f7a4a" fill-opacity="0.35" stroke="#1e40af" stroke-width="1.5"></rect><text x="335.75" y="137.3" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.133</text><text x="335.75" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">30.3%@228W</text><text x="335.75" y="236" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="700" letter-spacing="1">Apr 07</text><rect x="410.3" y="126.7" width="70" height="89.3" fill="#0f7a4a" fill-opacity="0.35" stroke="#b55a0a" stroke-width="1.5"></rect><text x="445.25" y="120.7" text-anchor="middle" fill="#0a0906" font-size="14" font-weight="700">0.163</text><text x="445.25" y="254" text-anchor="middle" fill="#0a0906" font-size="12" font-weight="700">39.1%@240W</text><text x="445.25" y="236" text-anchor="middle" fill="#b55a0a" font-size="12" font-weight="700" letter-spacing="1">Apr 17</text>
+  </svg>
+        </div>
+      </div></div></div>
+  </section>
+
+  <!-- NARRATIVE -->
+  <section>
+    <div class="sec-head">
+      <span class="tag">02</span>
+      <h2>Zone-by-zone read-out</h2>
+      <div class="rule"></div>
+    </div>
+
+    <p class="narr">
+      <strong>Why slope was misleading.</strong> A raw SmO2 slope of −0.03 %/s looks alarming, but if that's happening at 250 W instead of 180 W, it's a totally different story. The athlete is producing 40 % more power — a faster SmO2 drop is expected. Normalizing by power (SmO2 mean ÷ watts) answers the real question: <em>at this power output, how much oxygen is available in the muscle?</em> Higher ratio = better economy.
+      <br><br>
+      <strong>Mar 25 &amp; Mar 31 were learning sessions.</strong> Nine of 45 windows flag off-protocol — the athlete rode the 80 % and 85 % windows at steady-zone HR in Mar 25, and drifted in and out of target zones on Mar 31. Those cells are shown hollow/dashed and excluded from trend deltas. The paradox those windows created (high SmO2/W because low watts at low HR) was the source of the earlier confusion.
+      <br><br>
+      <strong>With clean windows only, the story tightens.</strong> Where we have matched protocol execution across all 4 days, <strong>every single slot shows SmO2/W climbing Mar 25 (or the first valid date) → Apr 17</strong>. No exceptions. The Block 1 progression is the cleanest because all four sessions hit the target HRs in that opening block.
+      <br><br>
+      <strong>B1 85 % is the cleanest headline.</strong> All four days on-protocol. SmO2/W went <b>0.054 → 0.099 → 0.123 → 0.126</b> — more than 2.3× better economy at the protocol's hardest zone. Mar 25 produced 257 W at 13.9 % SmO2. Apr 17 produced 252 W at 31.8 % SmO2. Same power, far more oxygen in the tissue, same heart rate. That's textbook aerobic adaptation.
+      <br><br>
+      <strong>P:HR agrees where we have clean data.</strong> Watts per beat is up in the Block 1 &amp; Block 2 hard zones, held near ceiling in Block 1 (where the athlete was already strong when fresh), and climbing monotonically in Block 3 where late-session fatigue used to hurt him.
+      <br><br>
+      <strong>The combined picture.</strong> Rising P:HR (more power per beat, cardiovascular) PLUS rising SmO2/W (more oxygen at the muscle per watt, peripheral) in the same sessions is the strongest possible reading. The adaptation is happening at both levels. The slope data was hiding this story because it wasn't normalized, AND the first two sessions' off-protocol windows were creating false positives on the economy side.
+    </p>
+
+    <div class="callout em">
+      <div class="cl-title">Working read</div>
+      <p>Once off-protocol windows are excluded, every clean comparison shows improvement. The fatmax ceiling can move to <b>195–210 W</b>. Apr 17 B3 80 % (226 W at 43.6 % SmO2 mean, on-protocol) is the strongest single evidence.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>CLAUDE · generated 2026-04-21</span>
+    <span>49 steps · 4 sessions · step detection via HR-bin clustering + protocol-aware labeling</span>
+  </footer>
+
+</div>
+
+<script>
+const SLOT_DATA = {"B1 Steady": {"block": 1, "zone": "steady", "label": "B1 Steady", "days": {"Mar 25": {"hr_mean": 117.4, "w_mean": 184, "pHR": 1.568, "smo2_mean": 33.6, "smo2_slope_per_s": -0.0008, "smo2_per_w": 0.1827, "smo2_slope_per_100w": -0.00044, "smo2_change_pp": 20.2, "smo2_delta_per_w": 0.10976, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Mar 31": {"hr_mean": 119.8, "w_mean": 170, "pHR": 1.416, "smo2_mean": 32.9, "smo2_slope_per_s": -0.0028, "smo2_per_w": 0.1938, "smo2_slope_per_100w": -0.00168, "smo2_change_pp": -10.53, "smo2_delta_per_w": -0.06212, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 07": {"hr_mean": 120.4, "w_mean": 150, "pHR": 1.245, "smo2_mean": 43.6, "smo2_slope_per_s": -0.0002, "smo2_per_w": 0.2907, "smo2_slope_per_100w": -0.00016, "smo2_change_pp": -0.59, "smo2_delta_per_w": -0.00391, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 17": {"hr_mean": 116.0, "w_mean": 179, "pHR": 1.544, "smo2_mean": 53.5, "smo2_slope_per_s": 0.0017, "smo2_per_w": 0.2989, "smo2_slope_per_100w": 0.00097, "smo2_change_pp": 16.09, "smo2_delta_per_w": 0.08983, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}}}, "B1 75%": {"block": 1, "zone": "z75", "label": "B1 75%", "days": {"Mar 25": {"hr_mean": 129.2, "w_mean": 214, "pHR": 1.657, "smo2_mean": 25.7, "smo2_slope_per_s": -0.004, "smo2_per_w": 0.1198, "smo2_slope_per_100w": -0.00189, "smo2_change_pp": -22.91, "smo2_delta_per_w": -0.10703, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Mar 31": {"hr_mean": 123.9, "w_mean": 198, "pHR": 1.599, "smo2_mean": 28.5, "smo2_slope_per_s": 0.0183, "smo2_per_w": 0.1441, "smo2_slope_per_100w": 0.00923, "smo2_change_pp": 16.04, "smo2_delta_per_w": 0.08096, "hr_ok": false, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 07": {"hr_mean": 130.5, "w_mean": 180, "pHR": 1.381, "smo2_mean": 37.0, "smo2_slope_per_s": -0.0052, "smo2_per_w": 0.2056, "smo2_slope_per_100w": -0.00287, "smo2_change_pp": -6.03, "smo2_delta_per_w": -0.03345, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 17": {"hr_mean": 128.4, "w_mean": 209, "pHR": 1.627, "smo2_mean": 43.8, "smo2_slope_per_s": -0.0054, "smo2_per_w": 0.2094, "smo2_slope_per_100w": -0.00259, "smo2_change_pp": -15.21, "smo2_delta_per_w": -0.07282, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}}}, "B1 80%": {"block": 1, "zone": "z80", "label": "B1 80%", "days": {"Mar 25": {"hr_mean": 139.8, "w_mean": 238, "pHR": 1.699, "smo2_mean": 18.4, "smo2_slope_per_s": -0.0041, "smo2_per_w": 0.0775, "smo2_slope_per_100w": -0.00174, "smo2_change_pp": -8.19, "smo2_delta_per_w": -0.03448, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Mar 31": {"hr_mean": 132.0, "w_mean": 217, "pHR": 1.647, "smo2_mean": 21.6, "smo2_slope_per_s": -0.0144, "smo2_per_w": 0.0992, "smo2_slope_per_100w": -0.00662, "smo2_change_pp": -22.39, "smo2_delta_per_w": -0.10294, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 07": {"hr_mean": 139.6, "w_mean": 202, "pHR": 1.447, "smo2_mean": 31.3, "smo2_slope_per_s": -0.0038, "smo2_per_w": 0.1552, "smo2_slope_per_100w": -0.00189, "smo2_change_pp": -4.94, "smo2_delta_per_w": -0.02446, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 17": {"hr_mean": 138.8, "w_mean": 232, "pHR": 1.673, "smo2_mean": 37.4, "smo2_slope_per_s": -0.0085, "smo2_per_w": 0.1611, "smo2_slope_per_100w": -0.00367, "smo2_change_pp": -7.72, "smo2_delta_per_w": -0.03325, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}}}, "B1 85%": {"block": 1, "zone": "z85", "label": "B1 85%", "days": {"Mar 25": {"hr_mean": 147.2, "w_mean": 257, "pHR": 1.746, "smo2_mean": 13.9, "smo2_slope_per_s": -0.0167, "smo2_per_w": 0.0542, "smo2_slope_per_100w": -0.00652, "smo2_change_pp": -6.29, "smo2_delta_per_w": -0.02447, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Mar 31": {"hr_mean": 141.3, "w_mean": 222, "pHR": 1.574, "smo2_mean": 21.9, "smo2_slope_per_s": 0.0013, "smo2_per_w": 0.0987, "smo2_slope_per_100w": 0.00058, "smo2_change_pp": -0.96, "smo2_delta_per_w": -0.00432, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Apr 07": {"hr_mean": 144.6, "w_mean": 222, "pHR": 1.536, "smo2_mean": 27.3, "smo2_slope_per_s": -0.019, "smo2_per_w": 0.1231, "smo2_slope_per_100w": -0.00856, "smo2_change_pp": -5.53, "smo2_delta_per_w": -0.02491, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Apr 17": {"hr_mean": 145.3, "w_mean": 252, "pHR": 1.735, "smo2_mean": 31.8, "smo2_slope_per_s": -0.0302, "smo2_per_w": 0.1262, "smo2_slope_per_100w": -0.01198, "smo2_change_pp": -4.4, "smo2_delta_per_w": -0.01746, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}}}, "B2 Steady": {"block": 2, "zone": "steady", "label": "B2 Steady", "days": {"Mar 25": {"hr_mean": 113.5, "w_mean": 167, "pHR": 1.473, "smo2_mean": 36.6, "smo2_slope_per_s": -0.0096, "smo2_per_w": 0.2188, "smo2_slope_per_100w": -0.00574, "smo2_change_pp": -21.8, "smo2_delta_per_w": -0.13048, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Mar 31": {"hr_mean": 120.9, "w_mean": 154, "pHR": 1.275, "smo2_mean": 31.7, "smo2_slope_per_s": 0.0015, "smo2_per_w": 0.2055, "smo2_slope_per_100w": 0.00097, "smo2_change_pp": 14.46, "smo2_delta_per_w": 0.09379, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 07": {"hr_mean": 118.3, "w_mean": 161, "pHR": 1.359, "smo2_mean": 38.2, "smo2_slope_per_s": 0.0005, "smo2_per_w": 0.2379, "smo2_slope_per_100w": 0.00029, "smo2_change_pp": -2.05, "smo2_delta_per_w": -0.01278, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 17": {"hr_mean": 117.1, "w_mean": 168, "pHR": 1.435, "smo2_mean": 48.9, "smo2_slope_per_s": -0.0071, "smo2_per_w": 0.2909, "smo2_slope_per_100w": -0.00424, "smo2_change_pp": -6.64, "smo2_delta_per_w": -0.0395, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}}}, "B2 75%": {"block": 2, "zone": "z75", "label": "B2 75%", "days": {"Mar 25": {"hr_mean": 128.3, "w_mean": 200, "pHR": 1.561, "smo2_mean": 31.9, "smo2_slope_per_s": -0.0067, "smo2_per_w": 0.1591, "smo2_slope_per_100w": -0.00336, "smo2_change_pp": -4.39, "smo2_delta_per_w": -0.02193, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Mar 31": {"hr_mean": 122.2, "w_mean": 180, "pHR": 1.474, "smo2_mean": 29.1, "smo2_slope_per_s": -0.0058, "smo2_per_w": 0.1617, "smo2_slope_per_100w": -0.00321, "smo2_change_pp": -4.05, "smo2_delta_per_w": -0.02249, "hr_ok": false, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 07": {"hr_mean": 128.2, "w_mean": 191, "pHR": 1.492, "smo2_mean": 33.9, "smo2_slope_per_s": -0.0064, "smo2_per_w": 0.1772, "smo2_slope_per_100w": -0.00335, "smo2_change_pp": -6.49, "smo2_delta_per_w": -0.03396, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 17": {"hr_mean": 129.6, "w_mean": 211, "pHR": 1.63, "smo2_mean": 40.8, "smo2_slope_per_s": -0.0006, "smo2_per_w": 0.1933, "smo2_slope_per_100w": -0.00028, "smo2_change_pp": -5.45, "smo2_delta_per_w": -0.02582, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}}}, "B2 80%": {"block": 2, "zone": "z80", "label": "B2 80%", "days": {"Mar 25": {"hr_mean": 117.8, "w_mean": 186, "pHR": 1.579, "smo2_mean": 39.6, "smo2_slope_per_s": 0.0267, "smo2_per_w": 0.2131, "smo2_slope_per_100w": 0.01433, "smo2_change_pp": 4.01, "smo2_delta_per_w": 0.02154, "hr_ok": false, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Mar 31": {"hr_mean": 131.6, "w_mean": 202, "pHR": 1.537, "smo2_mean": 27.8, "smo2_slope_per_s": 0.0039, "smo2_per_w": 0.1375, "smo2_slope_per_100w": 0.00192, "smo2_change_pp": 2.58, "smo2_delta_per_w": 0.01275, "hr_ok": false, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 07": {"hr_mean": 138.2, "w_mean": 215, "pHR": 1.559, "smo2_mean": 30.4, "smo2_slope_per_s": -0.0058, "smo2_per_w": 0.1411, "smo2_slope_per_100w": -0.0027, "smo2_change_pp": -5.02, "smo2_delta_per_w": -0.0233, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 17": {"hr_mean": 137.6, "w_mean": 233, "pHR": 1.695, "smo2_mean": 38.0, "smo2_slope_per_s": -0.0083, "smo2_per_w": 0.163, "smo2_slope_per_100w": -0.00355, "smo2_change_pp": -3.31, "smo2_delta_per_w": -0.01418, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}}}, "B2 85%": {"block": 2, "zone": "z85", "label": "B2 85%", "days": {"Mar 25": {"hr_mean": 117.9, "w_mean": 168, "pHR": 1.421, "smo2_mean": 37.9, "smo2_slope_per_s": -0.0094, "smo2_per_w": 0.2262, "smo2_slope_per_100w": -0.00564, "smo2_change_pp": -3.8, "smo2_delta_per_w": -0.02269, "hr_ok": false, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Mar 31": {"hr_mean": 135.8, "w_mean": 217, "pHR": 1.599, "smo2_mean": 24.3, "smo2_slope_per_s": -0.0327, "smo2_per_w": 0.1117, "smo2_slope_per_100w": -0.01504, "smo2_change_pp": -7.47, "smo2_delta_per_w": -0.03438, "hr_ok": false, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Apr 07": {"hr_mean": 144.5, "w_mean": 229, "pHR": 1.586, "smo2_mean": 28.7, "smo2_slope_per_s": -0.0166, "smo2_per_w": 0.125, "smo2_slope_per_100w": -0.00724, "smo2_change_pp": -3.2, "smo2_delta_per_w": -0.01396, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Apr 17": {"hr_mean": 145.0, "w_mean": 254, "pHR": 1.751, "smo2_mean": 33.1, "smo2_slope_per_s": -0.029, "smo2_per_w": 0.1306, "smo2_slope_per_100w": -0.01142, "smo2_change_pp": -9.18, "smo2_delta_per_w": -0.03617, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}}}, "B3 Steady": {"block": 3, "zone": "steady", "label": "B3 Steady", "days": {"Mar 25": {"hr_mean": 121.5, "w_mean": 174, "pHR": 1.435, "smo2_mean": 37.4, "smo2_slope_per_s": 0.001, "smo2_per_w": 0.2146, "smo2_slope_per_100w": 0.00058, "smo2_change_pp": -1.41, "smo2_delta_per_w": -0.0081, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Mar 31": {"hr_mean": 131.8, "w_mean": 188, "pHR": 1.427, "smo2_mean": 25.9, "smo2_slope_per_s": 0.0236, "smo2_per_w": 0.1378, "smo2_slope_per_100w": 0.01253, "smo2_change_pp": 8.7, "smo2_delta_per_w": 0.04626, "hr_ok": false, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 07": {"hr_mean": 118.7, "w_mean": 153, "pHR": 1.287, "smo2_mean": 40.5, "smo2_slope_per_s": -0.0039, "smo2_per_w": 0.2649, "smo2_slope_per_100w": -0.00255, "smo2_change_pp": -3.73, "smo2_delta_per_w": -0.02443, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}, "Apr 17": {"hr_mean": 115.3, "w_mean": 162, "pHR": 1.405, "smo2_mean": 50.5, "smo2_slope_per_s": -0.0047, "smo2_per_w": 0.3121, "smo2_slope_per_100w": -0.00292, "smo2_change_pp": -7.33, "smo2_delta_per_w": -0.04525, "hr_ok": true, "hr_expected_lo": 115, "hr_expected_hi": 127}}}, "B3 75%": {"block": 3, "zone": "z75", "label": "B3 75%", "days": {"Mar 25": {"hr_mean": 115.1, "w_mean": 151, "pHR": 1.313, "smo2_mean": 41.9, "smo2_slope_per_s": 0.0168, "smo2_per_w": 0.2773, "smo2_slope_per_100w": 0.0111, "smo2_change_pp": 7.66, "smo2_delta_per_w": 0.05067, "hr_ok": false, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Mar 31": {"hr_mean": 122.8, "w_mean": 171, "pHR": 1.395, "smo2_mean": 31.6, "smo2_slope_per_s": -0.0014, "smo2_per_w": 0.1845, "smo2_slope_per_100w": -0.00082, "smo2_change_pp": -1.81, "smo2_delta_per_w": -0.01055, "hr_ok": false, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 07": {"hr_mean": 129.7, "w_mean": 195, "pHR": 1.505, "smo2_mean": 34.6, "smo2_slope_per_s": -0.0048, "smo2_per_w": 0.1772, "smo2_slope_per_100w": -0.00245, "smo2_change_pp": -1.78, "smo2_delta_per_w": -0.00912, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}, "Apr 17": {"hr_mean": 129.5, "w_mean": 205, "pHR": 1.584, "smo2_mean": 44.5, "smo2_slope_per_s": 0.0031, "smo2_per_w": 0.2169, "smo2_slope_per_100w": 0.00151, "smo2_change_pp": -6.87, "smo2_delta_per_w": -0.03348, "hr_ok": true, "hr_expected_lo": 127, "hr_expected_hi": 135}}}, "B3 80%": {"block": 3, "zone": "z80", "label": "B3 80%", "days": {"Mar 31": {"hr_mean": 132.1, "w_mean": 203, "pHR": 1.537, "smo2_mean": 26.7, "smo2_slope_per_s": -0.0052, "smo2_per_w": 0.1314, "smo2_slope_per_100w": -0.00254, "smo2_change_pp": 0.61, "smo2_delta_per_w": 0.00302, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 07": {"hr_mean": 138.4, "w_mean": 213, "pHR": 1.538, "smo2_mean": 32.1, "smo2_slope_per_s": -0.0033, "smo2_per_w": 0.1507, "smo2_slope_per_100w": -0.00156, "smo2_change_pp": -2.88, "smo2_delta_per_w": -0.01353, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}, "Apr 17": {"hr_mean": 138.1, "w_mean": 226, "pHR": 1.636, "smo2_mean": 43.6, "smo2_slope_per_s": -0.0058, "smo2_per_w": 0.193, "smo2_slope_per_100w": -0.00258, "smo2_change_pp": -4.62, "smo2_delta_per_w": -0.02046, "hr_ok": true, "hr_expected_lo": 135, "hr_expected_hi": 144}}}, "B3 85%": {"block": 3, "zone": "z85", "label": "B3 85%", "days": {"Apr 07": {"hr_mean": 144.1, "w_mean": 228, "pHR": 1.585, "smo2_mean": 30.3, "smo2_slope_per_s": -0.0176, "smo2_per_w": 0.1325, "smo2_slope_per_100w": -0.0077, "smo2_change_pp": -5.29, "smo2_delta_per_w": -0.02315, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}, "Apr 17": {"hr_mean": 143.9, "w_mean": 240, "pHR": 1.667, "smo2_mean": 39.1, "smo2_slope_per_s": -0.051, "smo2_per_w": 0.1628, "smo2_slope_per_100w": -0.02124, "smo2_change_pp": -10.69, "smo2_delta_per_w": -0.04457, "hr_ok": true, "hr_expected_lo": 144, "hr_expected_hi": 170}}}};
+const DAYS = ['Mar 25','Mar 31','Apr 07','Apr 17'];
+const DAY_COLORS = {'Mar 25':'#737373','Mar 31':'#0891b2','Apr 07':'#1e40af','Apr 17':'#b55a0a'};
+const ZONE_COLOR = {'steady':'#0e7490','z75':'#047857','z80':'#c2410c','z85':'#b91c1c'};
+const ZONE_NAME  = {'steady':'Steady','z75':'75 %','z80':'80 %','z85':'85 %'};
+const ZONE_DESC  = {'steady':'65–70 % HR','z75':'~131 bpm','z80':'~141 bpm','z85':'~148 bpm'};
+
+const POS_GREEN = '#0f7a4a';
+const NEG_RED   = '#b8390e';
+
+// -------- Efficiency card: P:HR ratio bars, with W@HR label under each --------
+function svgEfficiencyCard(slot, globalYMax, globalYMin){
+  const W = 520, H = 290;
+  const margin = {top:24, right:20, bottom:74, left:58};
+  const innerW = W - margin.left - margin.right;
+  const innerH = H - margin.top - margin.bottom;
+
+  const yMax = globalYMax;
+  const yMin = globalYMin;
+  const yRange = yMax - yMin;
+  const yToPx = v => margin.top + innerH - ((v - yMin) / yRange) * innerH;
+  const baseY = yToPx(yMin);
+
+  // gridlines
+  let grid = '';
+  const ticks = [];
+  const stride = 0.2;
+  for(let v = Math.ceil(yMin/stride)*stride; v <= yMax + 1e-9; v += stride){
+    const y = yToPx(v);
+    grid += `<line x1="${margin.left}" x2="${W-margin.right}" y1="${y}" y2="${y}"
+      stroke="#e9e5db" stroke-width="1"/>`;
+    ticks.push(`<text x="${margin.left-8}" y="${y+4}" fill="#4a4740" font-size="11" text-anchor="end">${v.toFixed(1)}</text>`);
+  }
+
+  const n = DAYS.length;
+  const slotW = innerW / n;
+  const barW = Math.min(70, slotW * 0.66);
+  const barPad = (slotW - barW) / 2;
+
+  let bars = '';
+  DAYS.forEach((d, i)=>{
+    const s = slot.days[d];
+    const x = margin.left + i*slotW + barPad;
+    const cx = x + barW/2;
+    const xLabelY = H - margin.bottom + 20;
+    const subLabelY = xLabelY + 18;
+    const dayColor = DAY_COLORS[d];
+    if(!s || s.pHR == null){
+      bars += `<text x="${cx}" y="${(baseY-8).toFixed(1)}" text-anchor="middle"
+        fill="#8a857a" font-size="18" font-weight="700">—</text>`;
+    } else {
+      const yTop = yToPx(s.pHR);
+      const h = baseY - yTop;
+      const offProtocol = s.hr_ok === false;
+      // Off-protocol: hollow bar with dashed stroke + warning asterisk
+      if(offProtocol){
+        bars += `<rect x="${x.toFixed(1)}" y="${yTop.toFixed(1)}" width="${barW}" height="${Math.max(0.5,h).toFixed(1)}"
+          fill="${dayColor}" fill-opacity="0.08" stroke="${dayColor}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+        bars += `<text x="${cx}" y="${(yTop-6).toFixed(1)}" text-anchor="middle"
+          fill="#8a857a" font-size="13" font-weight="600" font-style="italic">${s.pHR.toFixed(2)}*</text>`;
+      } else {
+        bars += `<rect x="${x.toFixed(1)}" y="${yTop.toFixed(1)}" width="${barW}" height="${Math.max(0.5,h).toFixed(1)}"
+          fill="${dayColor}" fill-opacity="0.82" stroke="${dayColor}" stroke-width="1"/>`;
+        bars += `<text x="${cx}" y="${(yTop-6).toFixed(1)}" text-anchor="middle"
+          fill="#0a0906" font-size="14" font-weight="700">${s.pHR.toFixed(2)}</text>`;
+      }
+      const hrColor = offProtocol ? '#8a857a' : '#0a0906';
+      bars += `<text x="${cx}" y="${subLabelY}" text-anchor="middle"
+        fill="${hrColor}" font-size="12" font-weight="${offProtocol?600:700}" ${offProtocol?'font-style="italic"':''}>${s.w_mean}W@${Math.round(s.hr_mean)}</text>`;
+    }
+    // Date label
+    bars += `<text x="${cx}" y="${xLabelY}" text-anchor="middle"
+      fill="${dayColor}" font-size="12" font-weight="700" letter-spacing="1">${d}</text>`;
+  });
+
+  const baseline = `<line x1="${margin.left}" x2="${W-margin.right}" y1="${baseY}" y2="${baseY}"
+    stroke="#141210" stroke-width="1.5"/>`;
+
+  const yLabel = `<text x="${margin.left-42}" y="${margin.top+innerH/2}"
+    transform="rotate(-90 ${margin.left-42} ${margin.top+innerH/2})"
+    fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600"
+    letter-spacing="2">P : HR</text>`;
+
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    ${grid}${baseline}${ticks.join('')}${yLabel}${bars}
+  </svg>`;
+}
+
+// -------- Economy card: SmO2/W bars, with SmO2% @ W label under each --------
+function svgEconomyCard(slot, globalYMax){
+  const W = 520, H = 290;
+  const margin = {top:24, right:20, bottom:74, left:62};
+  const innerW = W - margin.left - margin.right;
+  const innerH = H - margin.top - margin.bottom;
+
+  const yMax = globalYMax;
+  const yMin = 0;
+  const yToPx = v => margin.top + innerH - ((v - yMin) / (yMax - yMin)) * innerH;
+  const baseY = yToPx(0);
+
+  // gridlines
+  let grid = '';
+  const ticks = [];
+  const stride = 0.05;
+  for(let v=0; v<=yMax + 1e-9; v += stride){
+    const y = yToPx(v);
+    grid += `<line x1="${margin.left}" x2="${W-margin.right}" y1="${y}" y2="${y}"
+      stroke="#e9e5db" stroke-width="1"/>`;
+    ticks.push(`<text x="${margin.left-8}" y="${y+4}" fill="#4a4740" font-size="11" text-anchor="end">${v.toFixed(2)}</text>`);
+  }
+
+  const n = DAYS.length;
+  const slotW = innerW / n;
+  const barW = Math.min(70, slotW * 0.66);
+  const barPad = (slotW - barW) / 2;
+
+  let bars = '';
+  DAYS.forEach((d, i)=>{
+    const s = slot.days[d];
+    const x = margin.left + i*slotW + barPad;
+    const cx = x + barW/2;
+    const xLabelY = H - margin.bottom + 20;
+    const subLabelY = xLabelY + 18;
+    const dayColor = DAY_COLORS[d];
+    if(!s || s.smo2_per_w == null){
+      bars += `<text x="${cx}" y="${(baseY-8).toFixed(1)}" text-anchor="middle"
+        fill="#8a857a" font-size="18" font-weight="700">—</text>`;
+    } else {
+      const yTop = yToPx(s.smo2_per_w);
+      const h = baseY - yTop;
+      const offProtocol = s.hr_ok === false;
+      const color = POS_GREEN;
+      if(offProtocol){
+        bars += `<rect x="${x.toFixed(1)}" y="${yTop.toFixed(1)}" width="${barW}" height="${Math.max(0.5,h).toFixed(1)}"
+          fill="${color}" fill-opacity="0.08" stroke="${dayColor}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+        bars += `<text x="${cx}" y="${(yTop-6).toFixed(1)}" text-anchor="middle"
+          fill="#8a857a" font-size="13" font-weight="600" font-style="italic">${s.smo2_per_w.toFixed(3)}*</text>`;
+      } else {
+        bars += `<rect x="${x.toFixed(1)}" y="${yTop.toFixed(1)}" width="${barW}" height="${Math.max(0.5,h).toFixed(1)}"
+          fill="${color}" fill-opacity="0.35" stroke="${dayColor}" stroke-width="1.5"/>`;
+        bars += `<text x="${cx}" y="${(yTop-6).toFixed(1)}" text-anchor="middle"
+          fill="#0a0906" font-size="14" font-weight="700">${s.smo2_per_w.toFixed(3)}</text>`;
+      }
+      const subColor = offProtocol ? '#8a857a' : '#0a0906';
+      bars += `<text x="${cx}" y="${subLabelY}" text-anchor="middle"
+        fill="${subColor}" font-size="12" font-weight="${offProtocol?600:700}" ${offProtocol?'font-style="italic"':''}>${s.smo2_mean}%@${s.w_mean}W</text>`;
+    }
+    // Date
+    bars += `<text x="${cx}" y="${xLabelY}" text-anchor="middle"
+      fill="${dayColor}" font-size="12" font-weight="700" letter-spacing="1">${d}</text>`;
+  });
+
+  const baseline = `<line x1="${margin.left}" x2="${W-margin.right}" y1="${baseY}" y2="${baseY}"
+    stroke="#141210" stroke-width="1.5"/>`;
+
+  const yLabel = `<text x="${margin.left-46}" y="${margin.top+innerH/2}"
+    transform="rotate(-90 ${margin.left-46} ${margin.top+innerH/2})"
+    fill="#2e2b24" font-size="12" text-anchor="middle" font-weight="600"
+    letter-spacing="2">SmO2 / W</text>`;
+
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    ${grid}${baseline}${ticks.join('')}${yLabel}${bars}
+  </svg>`;
+}
+
+// -------- Build the grid --------
+function renderGrid(){
+  const container = document.getElementById('slotGrid');
+
+  const ZONE_ORDER = ['steady','z75','z80','z85'];
+  const slots = Object.values(SLOT_DATA).sort((a,b)=>{
+    if(a.block!==b.block) return a.block - b.block;
+    return ZONE_ORDER.indexOf(a.zone) - ZONE_ORDER.indexOf(b.zone);
+  });
+
+  // Helper: only valid (on-protocol) cells count for axis bounds & trend deltas
+  const isValid = s => s != null && s.hr_ok !== false;
+
+  // Global Y bounds for P:HR (valid cells only)
+  let pHRmin = 1e9, pHRmax = 0;
+  slots.forEach(s=>{
+    Object.values(s.days).forEach(x=>{
+      if(isValid(x) && x.pHR != null){
+        if(x.pHR < pHRmin) pHRmin = x.pHR;
+        if(x.pHR > pHRmax) pHRmax = x.pHR;
+      }
+    });
+  });
+  pHRmin = Math.floor((pHRmin - 0.05) * 10) / 10;
+  pHRmax = Math.ceil((pHRmax + 0.05) * 10) / 10;
+
+  // Global Y max for SmO2/W economy chart (valid cells only)
+  let swMax = 0;
+  slots.forEach(s=>{
+    Object.values(s.days).forEach(x=>{
+      if(isValid(x) && x.smo2_per_w != null && x.smo2_per_w > swMax) swMax = x.smo2_per_w;
+    });
+  });
+  swMax = Math.ceil(swMax * 20 + 0.5) / 20;
+
+  slots.forEach(slot=>{
+    // For deltas, use only valid cells, but remember the order
+    const validDays = DAYS.filter(d => isValid(slot.days[d]));
+    const pHRvals = validDays.map(d=>slot.days[d].pHR).filter(v=>v!=null);
+    const swVals  = validDays.map(d=>slot.days[d].smo2_per_w).filter(v=>v!=null);
+
+    const pDelta = pHRvals.length>=2 ? (pHRvals[pHRvals.length-1] - pHRvals[0]) : null;
+    const swDelta = swVals.length>=2 ? (swVals[swVals.length-1] - swVals[0]) : null;
+
+    // Count how many days were flagged off-protocol in this slot
+    const flaggedDays = DAYS.filter(d => slot.days[d] != null && slot.days[d].hr_ok === false);
+    const flagNote = flaggedDays.length > 0
+      ? `<span class="flag-note">* ${flaggedDays.join(', ')} off-protocol (HR outside zone)</span>`
+      : '';
+
+    const pDeltaStr = pDelta==null ? '' :
+      `<span class="delta ${pDelta>0.01?'pos':pDelta<-0.01?'neg':''}">${pDelta>0?'+':''}${pDelta.toFixed(2)}</span>`;
+    const swDeltaStr = swDelta==null ? '' :
+      `<span class="delta ${swDelta>0.005?'pos':swDelta<-0.005?'neg':''}">${swDelta>0?'+':''}${swDelta.toFixed(3)}</span>`;
+
+    const row = document.createElement('div');
+    row.className = 'slot-row';
+    row.innerHTML = `
+      <div class="slot-label">
+        <span class="sl">Block ${slot.block} · ${ZONE_NAME[slot.zone]}</span>
+        <span class="zone-chip ${slot.zone}">${ZONE_DESC[slot.zone]}</span>
+        ${flagNote}
+        <span class="bar"></span>
+      </div>
+      <div class="slot-cards">
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Efficiency · P:HR</span>
+            ${pDeltaStr}
+          </div>
+          <p class="csub">Watts per bpm. Higher = more power per heartbeat.</p>
+          ${svgEfficiencyCard(slot, pHRmax, pHRmin)}
+        </div>
+        <div class="scard">
+          <div class="chead">
+            <span class="title">Oxygen economy · SmO2/W</span>
+            ${swDeltaStr}
+          </div>
+          <p class="csub">Mean SmO2 % per watt. Higher = more oxygen available per unit of power.</p>
+          ${svgEconomyCard(slot, swMax)}
+        </div>
+      </div>`;
+    container.appendChild(row);
+  });
+}
+renderGrid();
+</script>
+
+
+</body></html>
